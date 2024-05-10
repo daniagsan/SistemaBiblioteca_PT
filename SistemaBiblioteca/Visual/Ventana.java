@@ -14,8 +14,7 @@ import javax.swing.JFrame;
 		int right = getInsets().right;
 		
 		setSize(1280 + left + right, 720 + top + bottom);
-        //no quitar el  close operation porque no se abre la ventana
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(true);
 		setTitle("Biblioteca General");
 		setLocationRelativeTo(null);
