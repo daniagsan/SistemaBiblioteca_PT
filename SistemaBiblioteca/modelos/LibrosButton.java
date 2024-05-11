@@ -1,18 +1,37 @@
 package SistemaBiblioteca.modelos;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-/* 
-Propiedades de un libro: 
--TITULO
--AUTOR
--PORTADA
--SINOPSIS
--ISBN
--EDITORIAL
--AÑO    Libros
-*/ 
+/*
+Esta clase nos va a servir para los botones de los libros, 
+es mas sencillo mostrarlos de esta manera ya que podemos manipular
+el tamaño de los mismos mientras la imagen se adapta
+*/
 
-public LibrosButton{
+public class LibrosButton{
+
+    private ImageIcon portada;
+    private JButton botonLibro = new JButton();
+
+    public LibrosButton(){
+
+    }
+
+    public ImageIcon getPortada() {
+        return portada;
+    }
+
+    public void setPortada(ImageIcon portada) {
+        this.portada = portada;
+    }
+
+    public JButton getBotonLibro() {
+        return botonLibro;
+    }
+
+    public void setBotonLibro(JButton botonLibro) {
+        this.botonLibro = botonLibro;
+    }
 
 }
