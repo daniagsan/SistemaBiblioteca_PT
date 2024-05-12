@@ -4,6 +4,8 @@ import java.awt.Color;
 
 import javax.swing.JFrame;
 
+import SistemaBiblioteca.Controladores.MainControl;
+
     public class Ventana extends JFrame{
 
     public Ventana() {
@@ -21,8 +23,9 @@ import javax.swing.JFrame;
 		setTitle("Biblioteca General");
 		setLocationRelativeTo(null);
 		
-		ControlVisual mainPanel = new ControlVisual();
+		VisualMain mainPanel = new VisualMain();
 		add(mainPanel);
+		MainControl mainControl = new MainControl(mainPanel);
 
 
 		validate();
