@@ -41,7 +41,7 @@ public class VisualMain extends JPanel{
             int newWidth = 100;
             int newHeight = 150;
             BufferedImage originalImage = ImageIO.read(new File("SistemaBiblioteca/files/portadas/1984.jpg"));
-            Image resizedImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+            Image resizedImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_AREA_AVERAGING);
             
             //anade un color vacio
             prueba.setBackground(new Color(0,0,0,0));
