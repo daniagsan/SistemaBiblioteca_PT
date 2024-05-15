@@ -3,16 +3,16 @@
         "."
     ],
     "java.project.referencedLibraries": [
-        "mysql-connector-j-8.4.0\\mysql-connector-j-8.4.0.jar",
+        "g:\\Mi unidad\\OnlineWorkSpace\\mysql-connector-j-8.4.0.jar",
         "g:\\Mi unidad\\OnlineWorkSpace\\jackson-core-2.17.0.jar",
-        "g:\\Mi unidad\\OnlineWorkSpace\\slf4j-simple-2.0.13.jar",
-        "g:\\Mi unidad\\OnlineWorkSpace\\json-20240303.jar",
-        "g:\\Mi unidad\\OnlineWorkSpace\\jackson-annotations-2.17.0.jar",
         "g:\\Mi unidad\\OnlineWorkSpace\\json-simple-1.1.1.jar",
+        "g:\\Mi unidad\\OnlineWorkSpace\\slf4j-simple-2.0.13.jar",
         "g:\\Mi unidad\\OnlineWorkSpace\\slf4j-api-2.0.13.jar",
+        "g:\\Mi unidad\\OnlineWorkSpace\\json-20240303.jar",
         "g:\\Mi unidad\\OnlineWorkSpace\\commons-8.0.4.jar",
         "g:\\Mi unidad\\OnlineWorkSpace\\layout-8.0.4.jar",
-        "g:\\Mi unidad\\PersonalProjects\\flatlaf-3.4.jar",
+        "g:\\Mi unidad\\OnlineWorkSpace\\flatlaf-3.4.jar",
+        "g:\\Mi unidad\\OnlineWorkSpace\\jackson-annotations-2.17.0.jar",
         "g:\\Mi unidad\\OnlineWorkSpace\\kernel-8.0.4.jar",
         "g:\\Mi unidad\\OnlineWorkSpace\\jackson-databind-2.17.0.jar",
         "g:\\Mi unidad\\OnlineWorkSpace\\io-8.0.4.jar"
