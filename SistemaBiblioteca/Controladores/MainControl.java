@@ -3,9 +3,6 @@ package SistemaBiblioteca.Controladores;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import SistemaBiblioteca.Visual.*;
 import SistemaBiblioteca.modelos.*;
 
@@ -25,13 +22,5 @@ public class MainControl implements ActionListener{
         System.out.println(e.getActionCommand());
         
     }
-
-    private void createConection(){
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException ex) {
-			Logger.getLogger(SistemaBiblioteca.Controladores.class.getName()).log(Level.SEVERE, null, ex);
-		}
-	}
 
 }
