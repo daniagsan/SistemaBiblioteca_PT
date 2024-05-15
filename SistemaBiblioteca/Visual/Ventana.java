@@ -7,6 +7,7 @@ import SistemaBiblioteca.Controladores.MainControl;
     public class Ventana extends JFrame{
 
 		DisplayText rb = new DisplayText();
+		String language = "es_MX";
 
     public Ventana() {
 
@@ -20,7 +21,7 @@ import SistemaBiblioteca.Controladores.MainControl;
 		setSize(854 + left + right, 480 + top + bottom);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(true);
-		setTitle(rb.language("es_MX").getString("mainWindowName"));
+		setTitle(rb.language(language).getString("mainWindowName"));
 		setLocationRelativeTo(null);
 		
 		VisualMain mainPanel = new VisualMain();
@@ -34,5 +35,15 @@ import SistemaBiblioteca.Controladores.MainControl;
         //el pack nos servira para que sea responsivo, recuerden usar el jpanel siempre
         //pack();
 	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	
 
 }
