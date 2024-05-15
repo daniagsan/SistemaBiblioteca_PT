@@ -18,10 +18,11 @@ public class LibroData extends LibrosButton{
 
     private String titulo;
     private String autor;
-    private String sinopsis;
-    private String isbn;
-    private String editorial;
     private String year;
+    private String isbn;
+    private String sinopsis;
+    private String editorial;
+    private String edicion;
 
     public LibroData(){
         super();
@@ -75,6 +76,15 @@ public class LibroData extends LibrosButton{
         this.year = year;
     }
 
+    public String getEdicion() {
+        return edicion;
+    }
+
+    public void setEdicion(String edicion) {
+        this.edicion = edicion;
+    }
+
+    
     
 
 }
