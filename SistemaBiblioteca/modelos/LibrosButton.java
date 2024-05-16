@@ -14,7 +14,7 @@ el tamaño de los mismos mientras la imagen se adapta
 public class LibrosButton{
 
     private ImageIcon portada;
-    private File filePortada;
+    private String dirFilePortada;
     private JButton botonLibro = new JButton();
 
     public LibrosButton(){
@@ -37,12 +37,12 @@ public class LibrosButton{
         this.botonLibro = botonLibro;
     }
 
-    public File getFilePortada() {
-        return filePortada;
+    public String getDirFilePortada() {
+        return dirFilePortada;
     }
 
-    public void setFilePortada(File filePortada) {
-        this.filePortada = filePortada;
+    public void setDirFilePortada(String dirFilePortada) {
+        this.dirFilePortada = dirFilePortada;
     }
 
 }
