@@ -16,12 +16,13 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
 public class VisualMain extends JPanel{
 
-    ButtonGroup bookButton = new ButtonGroup();
+    ArrayList<JButton> bookButtons = new ArrayList<>();
 
     public VisualMain(){
 
@@ -32,18 +33,33 @@ public class VisualMain extends JPanel{
     }
 
     public void addListener(ActionListener listener) {
-    
-        creadorLibros("").addActionListener(listener);
+
+        for(JButton b: bookButtons){
+            b.addActionListener(listener);
+        }
     }
 
     public JButton creadorLibros(String imageDir){
 
-        JButton libro = new JButton();
+        
+        return libro;
+    }
+
+    public JPanel panelLibros(JButton libro){
+
+        
+        JPanel areaLibros = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        /*
+         * Aqui se van a mostrar los libros en el centro
+         */
+
+         JButton libro = new JButton();
         //Parametros visuales: Imagen,
         //La imagen puede ser prescindible, en caso de que no haya imagen, colocar texto
         int newWidth = 100;
         int newHeight = 150;
-        imageDir = "SistemaBiblioteca/files/portadas/1984.jpg";
+        Dimension defaultButtonSize = new Dimension(newWidth, newHeight);
+
         try{
             
             BufferedImage originalImage = ImageIO.read(new File(imageDir));
@@ -65,7 +81,6 @@ public class VisualMain extends JPanel{
             libro.setIcon(new ImageIcon(resizedImage));
             
         }catch(IOException ex){
-            Dimension defaultButtonSize = new Dimension(newWidth, newHeight);
             libro.setPreferredSize(defaultButtonSize);
             libro.setBackground(Color.white);
             //quitamos el borde
@@ -81,17 +96,10 @@ public class VisualMain extends JPanel{
         }
 
 
-        bookButton.add(libro);
-        return libro;
-    }
+        bookButtons.add(libro);
 
-    public JPanel panelLibros(){
 
-        creadorLibros("");
-        JPanel areaLibros = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        /*
-         * Aqui se van a mostrar los libros en el centro
-         */
+        areaLibros.add(bookButtons.get(0));
     
         
 
