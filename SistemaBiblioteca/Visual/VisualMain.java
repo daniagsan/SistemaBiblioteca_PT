@@ -10,110 +10,103 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
-
-import SistemaBiblioteca.modelos.LibroData;
+import javax.swing.SwingUtilities;
 
 public class VisualMain extends JPanel{
 
-    ArrayList<LibroData> bookButtons = new ArrayList<>();
+    //Ventana ventana = new Ventana();
+    DisplayText displayStrings  = new DisplayText();
+    ArrayList<JButton> bookButtons = new ArrayList<>();
+    ArrayList<JButton> botones = new ArrayList<>();
+
+    ResourceBundle rb = displayStrings.getRb();
+    JButton nuevoLibro = new JButton(rb.getString("newBookButton"));
+    JButton buscar = new JButton(rb.getString("searchButton"));
+
 
     public VisualMain(){
 
         setLayout(new BorderLayout(5,5));
 		setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
-        add(panelLibros(), BorderLayout.CENTER);
+        panelLibros();
+
         
+    }
+
+    public void panelLibros(){
+
+        //ejemplos();
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        JPanel areaLibros = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel areaBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
+        for(JButton b: bookButtons){
+            areaLibros.add(b);
+        }
+
+        //personalizacion botones
+
+        areaBotones.add(buscar);
+        areaBotones.add(nuevoLibro);
+
+        mainPanel.add(areaBotones, BorderLayout.NORTH);
+        mainPanel.add(areaLibros, BorderLayout.CENTER);
+
+        add(mainPanel, BorderLayout.CENTER);
     }
 
     public void addListener(ActionListener listener) {
 
-        for(LibroData b: bookButtons){
-            b.getBotonLibro().addActionListener(listener);
+        for(JButton b: bookButtons){
+            b.addActionListener(listener);
         }
+
+        nuevoLibro.addActionListener(listener);
+        buscar.addActionListener(listener);
     }
 
 
-    public LibroData creadorLibro(String titulo, String autor, String imageDir){
-        //Primero  se ponen los  parametros del boton
-        LibroData libro =  new LibroData();
-        libro.setTitulo(titulo);
-        libro.setAutor(autor);
-        libro.setDirFilePortada(imageDir);
-        libro.setBotonLibro(new JButton(titulo));
-        
-        libro.getBotonLibro().setHorizontalTextPosition(JButton.CENTER);
-        libro.getBotonLibro().setRolloverEnabled(true);
-        //se asigna el tamano de los botones
-        int newWidth = 100;
-        int newHeight = 150;
-        Dimension defaultButtonSize = new Dimension(newWidth, newHeight);
+    public JButton creadorLibro(String titulo, String imageDir){
+    JButton libro =  new JButton(titulo);
+    libro.setHorizontalTextPosition(JButton.CENTER);
+    int newWidth = 100;
+    int newHeight = 150;
+    Dimension defaultButtonSize = new Dimension(newWidth, newHeight);
 
-        try{
-            BufferedImage originalImage = ImageIO.read(new File(libro.getDirFilePortada()));
-            Image resizedImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_AREA_AVERAGING);
-            
-            //anade un color vacio
-            libro.getBotonLibro().setBackground(new Color(0,0,0,0));
-            //quitamos el borde
-            libro.getBotonLibro().setBorderPainted(false);
-            //la posicion del texto la pone en medio
-            libro.getBotonLibro().setHorizontalTextPosition(JButton.CENTER);
-            //darle un color transparente
-            libro.getBotonLibro().setForeground(new Color(0,0,0,0));
-            /*
-             * Esta configuracion nos permite crear un boton y mandarlo a llamar con
-             * el texto, por lo que no sera visible al publico pero si para 
-             * el desarrollador
-             */
-            libro.getBotonLibro().setIcon(new ImageIcon(resizedImage));
-            
-        }catch(IOException ex){
-            
-            libro.getBotonLibro().setPreferredSize(defaultButtonSize);
-            libro.getBotonLibro().setBackground(Color.white);
-            //Proceso contrario para mostrar el texto
-            libro.getBotonLibro().setBorderPainted(true);
-            libro.getBotonLibro().setForeground(Color.black);
+        //Carga los botones de manera asincrona
+        new Thread(() -> {
+         try {
+                Image originalImage = ImageIO.read(new File(imageDir));
+                Image resizedImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_AREA_AVERAGING);
+                ImageIcon icon = new ImageIcon(resizedImage);
 
+             //Aqui se actualizan los botones
+             SwingUtilities.invokeLater(() -> {
+             libro.setIcon(icon);
+             libro.revalidate();
+             libro.repaint();
+            });
+        } catch (IOException ex) {
             //Apartado de aviso
             //JOptionPane.showMessageDialog(this, ex, "Falla al cargar archivo de imagen", 0);
             ex.printStackTrace();
         }
+        }).start();
 
-    
+        libro.setPreferredSize(defaultButtonSize);
+        libro.setBackground(Color.white);
+        libro.setBorderPainted(true);
+        libro.setForeground(Color.black);
+
         bookButtons.add(libro);
-
-        //return areaLibros;
         return libro;
-    }
-
-    public JPanel panelLibros(){
-
-        libroEjemplo();
-        JPanel areaLibros = new JPanel(new FlowLayout(FlowLayout.LEFT));
-
-        for(LibroData b: bookButtons){
-            areaLibros.add(b.getBotonLibro());
-        }
-
-        return areaLibros;
-
-    }
-
-    public void libroEjemplo(){
-        creadorLibro("1984", "", "");
-        creadorLibro("las mil un batallas", "", "");
-        creadorLibro("1984", "", "");
-        creadorLibro("1984", "", "");
-        creadorLibro("1984", "", "");
-
     }
 
 }

@@ -6,8 +6,8 @@ import SistemaBiblioteca.Controladores.MainControl;
 
     public class Ventana extends JFrame{
 
-		DisplayText rb = new DisplayText();
-		String language = "es_MX";
+		public DisplayText rb = new DisplayText();
+		public String language = "es_MX";
 
     public Ventana() {
 
@@ -26,6 +26,7 @@ import SistemaBiblioteca.Controladores.MainControl;
 		
 		VisualMain mainPanel = new VisualMain();
 		add(mainPanel);
+
 		MainControl mainControl = new MainControl(mainPanel);
 
 
@@ -40,7 +41,7 @@ import SistemaBiblioteca.Controladores.MainControl;
 		return language;
 	}
 
-	public void setLanguage(String language) {
+	public void setLanguage(String language ){
 		this.language = language;
 	}
 

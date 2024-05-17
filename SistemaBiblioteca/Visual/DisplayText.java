@@ -5,8 +5,8 @@ import java.util.ResourceBundle;
 public class DisplayText {
     
 
-    private ResourceBundle rb;
     private String defaultNameFile  = "SistemaBiblioteca.lang_es_MX";
+    private ResourceBundle rb =  ResourceBundle.getBundle(defaultNameFile);
 
     public DisplayText(){
 
@@ -25,12 +25,21 @@ public class DisplayText {
 
     }
 
+
     public String getDefaultNameFile() {
         return defaultNameFile;
     }
 
     public void setDefaultNameFile(String fileName) {
         this.defaultNameFile = fileName;
+    }
+
+    public ResourceBundle getRb() {
+        return rb;
+    }
+
+    public void setRb(ResourceBundle rb) {
+        this.rb = rb;
     }
 
     
