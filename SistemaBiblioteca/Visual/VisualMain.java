@@ -16,18 +16,25 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
 
 public class VisualMain extends JPanel{
 
     //Ventana ventana = new Ventana();
     DisplayText displayStrings  = new DisplayText();
-    ArrayList<JButton> bookButtons = new ArrayList<>();
-    ArrayList<JButton> botones = new ArrayList<>();
 
     ResourceBundle rb = displayStrings.getRb();
+
     JButton nuevoLibro = new JButton(rb.getString("newBookButton"));
     JButton buscar = new JButton(rb.getString("searchButton"));
+
+    ArrayList<JButton> bookButtons = new ArrayList<>();
+    ArrayList<JButton> botones = new ArrayList<>();
+    
+
+    JTextArea busqueda  = new JTextArea(rb.getString("searchButtonText"));
 
 
     public VisualMain(){
@@ -45,17 +52,20 @@ public class VisualMain extends JPanel{
         //ejemplos();
         JPanel mainPanel = new JPanel(new BorderLayout());
         JPanel areaLibros = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JPanel areaBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel areaBotones = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        areaBotones.setBackground(Color.black);
 
         for(JButton b: bookButtons){
             areaLibros.add(b);
         }
 
         //personalizacion botones
-
-        areaBotones.add(buscar);
+        busqueda.setBorder(BorderFactory.createLineBorder(Color.black));
         areaBotones.add(nuevoLibro);
-
+        areaBotones.add(buscar);
+        areaBotones.add(busqueda);
+        
+        
         mainPanel.add(areaBotones, BorderLayout.NORTH);
         mainPanel.add(areaLibros, BorderLayout.CENTER);
 

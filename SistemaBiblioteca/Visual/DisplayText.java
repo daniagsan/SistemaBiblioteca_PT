@@ -1,12 +1,13 @@
 package SistemaBiblioteca.Visual;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class DisplayText {
     
 
     private String defaultNameFile  = "SistemaBiblioteca.lang_es_MX";
-    private ResourceBundle rb =  ResourceBundle.getBundle(defaultNameFile);
+    private ResourceBundle rb =  ResourceBundle.getBundle(defaultNameFile, Locale.getDefault());
 
     public DisplayText(){
 
