@@ -1,7 +1,5 @@
 package SistemaBiblioteca.modelos;
 
-import java.io.File;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 

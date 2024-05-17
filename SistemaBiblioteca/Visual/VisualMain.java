@@ -18,7 +18,6 @@ import java.util.ResourceBundle;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
 
 public class VisualMain extends JPanel{
 
