@@ -1,6 +1,5 @@
 package SistemaBiblioteca.Controladores;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -11,10 +10,10 @@ import SistemaBiblioteca.modelos.*;
 
 public class MainControl implements ActionListener{
 
-    DisplayText displayStrings  = new DisplayText();
-    ResourceBundle rb = displayStrings.getRb();
-
+    public DisplayText displayStrings  = new DisplayText();
+    public ResourceBundle rb = displayStrings.getRb();
     public VisualMain visualMain = new VisualMain();
+    public Ventana_FormularioNuevoLibro formulario;
     
     public ArrayList<LibroData> librosUsuario = new ArrayList<>();
 
@@ -37,6 +36,10 @@ public class MainControl implements ActionListener{
         switch(e.getActionCommand()){
 
             case "+ Nuevo libro":
+            formulario = new Ventana_FormularioNuevoLibro();
+            formulario.asignarListeners(this);
+            formulario.setLocationRelativeTo(visualMain);
+            formulario.setVisible(true);
             nuevoLibro();
             break;
             

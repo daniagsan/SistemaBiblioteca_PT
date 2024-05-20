@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
@@ -36,7 +35,7 @@ public class VisualMain extends JPanel{
     ArrayList<JButton> botones = new ArrayList<>();
     
 
-    JTextArea busqueda  = new JTextArea(rb.getString("searchButtonText"));
+    JTextField busqueda  = new JTextField(30);
 
 
     public VisualMain(){
@@ -61,11 +60,15 @@ public class VisualMain extends JPanel{
 
     public void panelLibros(){
 
+        setBackground(Color.blue);
         //ejemplos();
         JPanel mainPanel = new JPanel(new BorderLayout());
         JPanel areaLibros = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel areaBotones = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        //areaBotones.setBackground(Color.black);
+
+
+        areaBotones.setBackground(Color.black);
+        areaLibros.setBackground(Color.red);
 
         for(JButton b: bookButtons){
             areaLibros.add(b);
