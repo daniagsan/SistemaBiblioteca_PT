@@ -8,6 +8,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -17,13 +19,14 @@ import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 public class VisualMain extends JPanel{
 
     //Ventana ventana = new Ventana();
     DisplayText displayStrings  = new DisplayText();
-
+    //VentanaFormularioNuevoLibro formularioNuevoLibro = new VentanaFormularioNuevoLibro(this);
     ResourceBundle rb = displayStrings.getRb();
 
     JButton nuevoLibro = new JButton(rb.getString("newBookButton"));
@@ -46,20 +49,37 @@ public class VisualMain extends JPanel{
         
     }
 
+    public JPanel formularioNuevoLibro(){
+        JPanel formulario = new JPanel(new GridLayout(0,1));
+
+        JTextField autorZone = new JTextField();
+        formulario.add(autorZone);
+
+
+        return formulario;
+    }
+
     public void panelLibros(){
 
         //ejemplos();
         JPanel mainPanel = new JPanel(new BorderLayout());
         JPanel areaLibros = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel areaBotones = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        areaBotones.setBackground(Color.black);
+        //areaBotones.setBackground(Color.black);
 
         for(JButton b: bookButtons){
             areaLibros.add(b);
         }
 
         //personalizacion botones
-        busqueda.setBorder(BorderFactory.createLineBorder(Color.black));
+        //busqueda.setBorder(BorderFactory.createLineBorder(Color.black));
+        nuevoLibro.setFont(new Font("Calibri",Font.PLAIN,18));
+        nuevoLibro.setHorizontalAlignment(JButton.CENTER);
+        buscar.setFont(new Font("Calibri",Font.PLAIN,18));
+        buscar.setHorizontalAlignment(JButton.CENTER);
+        busqueda.setFont(new Font("Calibri",Font.PLAIN,18));
+
+        
         areaBotones.add(nuevoLibro);
         areaBotones.add(buscar);
         areaBotones.add(busqueda);
@@ -83,24 +103,33 @@ public class VisualMain extends JPanel{
 
 
     public JButton creadorLibro(String titulo, String imageDir){
+
     JButton libro =  new JButton(titulo);
-    libro.setHorizontalTextPosition(JButton.CENTER);
     int newWidth = 100;
     int newHeight = 150;
     Dimension defaultButtonSize = new Dimension(newWidth, newHeight);
 
+    libro.setPreferredSize(defaultButtonSize);
+ 
         //Carga los botones de manera asincrona
         new Thread(() -> {
          try {
                 Image originalImage = ImageIO.read(new File(imageDir));
                 Image resizedImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_AREA_AVERAGING);
                 ImageIcon icon = new ImageIcon(resizedImage);
+                
+                libro.setBackground(new Color(0,0,0));
+                libro.setBorderPainted(false);
+                libro.setHorizontalTextPosition(JButton.CENTER);
+                libro.setForeground(new Color(0,0,0,0));
+                libro.setIcon(icon);
+                
 
              //Aqui se actualizan los botones
              SwingUtilities.invokeLater(() -> {
-             libro.setIcon(icon);
-             libro.revalidate();
-             libro.repaint();
+    
+            libro.revalidate();
+            libro.repaint();
             });
         } catch (IOException ex) {
             //Apartado de aviso
@@ -109,13 +138,10 @@ public class VisualMain extends JPanel{
         }
         }).start();
 
-        libro.setPreferredSize(defaultButtonSize);
-        libro.setBackground(Color.white);
-        libro.setBorderPainted(true);
-        libro.setForeground(Color.black);
-
         bookButtons.add(libro);
+
         return libro;
     }
+
 
 }
