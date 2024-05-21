@@ -15,7 +15,7 @@ import javax.swing.SpringLayout;
 
 import lib.SpringUtilities;
 
-public class Ventana_FormularioNuevoLibro extends  JFrame{
+public class Ventana_FormularioNuevoLibro extends JFrame{
 
     private DisplayText displayStrings  = new DisplayText();
     private ResourceBundle rb = displayStrings.getRb();
@@ -27,6 +27,7 @@ public class Ventana_FormularioNuevoLibro extends  JFrame{
 	
 	
 	public Ventana_FormularioNuevoLibro(){
+
         setVisible(true);
 		setTitle(rb.getString("newBookFormWindowName"));
 		setLayout(new BorderLayout());
@@ -58,7 +59,7 @@ public class Ventana_FormularioNuevoLibro extends  JFrame{
         panelBotones.add(botonPortada);
         add(panelBotones, BorderLayout.SOUTH);
 
-		setResizable(true);
+		setResizable(false);
 		pack();
         
     }

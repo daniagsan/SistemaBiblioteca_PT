@@ -32,7 +32,7 @@ public class VisualMain extends JPanel{
     JButton buscar = new JButton(rb.getString("searchButton"));
 
     ArrayList<JButton> bookButtons = new ArrayList<>();
-    ArrayList<JButton> botones = new ArrayList<>();
+    //ArrayList<JButton> botones = new ArrayList<>();
     
 
     JTextField busqueda  = new JTextField(30);
@@ -60,8 +60,16 @@ public class VisualMain extends JPanel{
 
     public void panelLibros(){
 
-        setBackground(Color.blue);
+        //setBackground(Color.blue);
         //ejemplos();
+        /*Mover el panel de los botones principales , los que no son los 
+        libros porque me los esta refrescando una y otra  vez  a un  area
+        donde  solo se recarguen una vez
+
+        Anadir:
+        revalidate();
+        repaint(); de esta manera lo que  hacemos es refrescar el area  de los libros
+        */
         JPanel mainPanel = new JPanel(new BorderLayout());
         JPanel areaLibros = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel areaBotones = new JPanel(new FlowLayout(FlowLayout.LEFT));
