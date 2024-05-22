@@ -36,10 +36,12 @@ public class MainControl implements ActionListener{
         switch(e.getActionCommand()){
 
             case "+ Nuevo libro":
+            /* 
             formulario = new Ventana_FormularioNuevoLibro();
             formulario.asignarListeners(this);
             formulario.setLocationRelativeTo(visualMain);
             formulario.setVisible(true);
+            */
             nuevoLibro();
             break;
             
@@ -58,7 +60,7 @@ public class MainControl implements ActionListener{
         libro.setDirFilePortada("SistemaBiblioteca\\files\\portadas\\1984.jpg");
         libro.setBotonLibro(visualMain.creadorLibro(libro.getAutor(), libro.getDirFilePortada()));
         librosUsuario.add(libro);
-        visualMain.panelLibros();
+        //visualMain.actualizarLibros();
         
 
     }

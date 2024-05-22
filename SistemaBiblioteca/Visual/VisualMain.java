@@ -9,7 +9,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -18,8 +17,8 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 public class VisualMain extends JPanel{
 
@@ -30,76 +29,56 @@ public class VisualMain extends JPanel{
 
     JButton nuevoLibro = new JButton(rb.getString("newBookButton"));
     JButton buscar = new JButton(rb.getString("searchButton"));
-
-    ArrayList<JButton> bookButtons = new ArrayList<>();
-    //ArrayList<JButton> botones = new ArrayList<>();
     
-
-    JTextField busqueda  = new JTextField(30);
+    ArrayList<JButton> bookButtons = new ArrayList<>();
+    JPanel areaLibros = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    JScrollPane scrollPane = new JScrollPane(areaLibros);
+    JTextField busqueda  = new JTextField();
 
 
     public VisualMain(){
 
         setLayout(new BorderLayout(5,5));
 		setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        
 
-        panelLibros();
-
+        add(panelBotones(), BorderLayout.NORTH);
+        add(areaLibros, BorderLayout.CENTER);
         
     }
 
-    public JPanel formularioNuevoLibro(){
-        JPanel formulario = new JPanel(new GridLayout(0,1));
 
-        JTextField autorZone = new JTextField();
-        formulario.add(autorZone);
+    public JPanel panelBotones(){
 
-
-        return formulario;
-    }
-
-    public void panelLibros(){
-
-        //setBackground(Color.blue);
-        //ejemplos();
-        /*Mover el panel de los botones principales , los que no son los 
-        libros porque me los esta refrescando una y otra  vez  a un  area
-        donde  solo se recarguen una vez
-
-        Anadir:
-        revalidate();
-        repaint(); de esta manera lo que  hacemos es refrescar el area  de los libros
-        */
-        JPanel mainPanel = new JPanel(new BorderLayout());
-        JPanel areaLibros = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel areaBotones = new JPanel(new FlowLayout(FlowLayout.LEFT));
-
-
         areaBotones.setBackground(Color.black);
-        areaLibros.setBackground(Color.red);
+        
 
-        for(JButton b: bookButtons){
-            areaLibros.add(b);
-        }
-
-        //personalizacion botones
-        //busqueda.setBorder(BorderFactory.createLineBorder(Color.black));
         nuevoLibro.setFont(new Font("Calibri",Font.PLAIN,18));
         nuevoLibro.setHorizontalAlignment(JButton.CENTER);
         buscar.setFont(new Font("Calibri",Font.PLAIN,18));
         buscar.setHorizontalAlignment(JButton.CENTER);
         busqueda.setFont(new Font("Calibri",Font.PLAIN,18));
 
-        
+
         areaBotones.add(nuevoLibro);
         areaBotones.add(buscar);
         areaBotones.add(busqueda);
         
-        
-        mainPanel.add(areaBotones, BorderLayout.NORTH);
-        mainPanel.add(areaLibros, BorderLayout.CENTER);
 
-        add(mainPanel, BorderLayout.CENTER);
+        return areaBotones;
+    }
+
+    public void updateBookPanel() {
+        areaLibros.removeAll();
+        for (JButton b : bookButtons) {
+            areaLibros.add(b);
+        }
+        
+        areaLibros.revalidate();
+        areaLibros.repaint();
+
+        
     }
 
     public void addListener(ActionListener listener) {
@@ -123,8 +102,7 @@ public class VisualMain extends JPanel{
     libro.setPreferredSize(defaultButtonSize);
  
         //Carga los botones de manera asincrona
-        new Thread(() -> {
-         try {
+        try {
                 Image originalImage = ImageIO.read(new File(imageDir));
                 Image resizedImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_AREA_AVERAGING);
                 ImageIcon icon = new ImageIcon(resizedImage);
@@ -137,20 +115,15 @@ public class VisualMain extends JPanel{
                 
 
              //Aqui se actualizan los botones
-             SwingUtilities.invokeLater(() -> {
-    
-            libro.revalidate();
-            libro.repaint();
-            });
         } catch (IOException ex) {
             //Apartado de aviso
             //JOptionPane.showMessageDialog(this, ex, "Falla al cargar archivo de imagen", 0);
             ex.printStackTrace();
         }
-        }).start();
 
+        
         bookButtons.add(libro);
-
+        updateBookPanel();
         return libro;
     }
 
