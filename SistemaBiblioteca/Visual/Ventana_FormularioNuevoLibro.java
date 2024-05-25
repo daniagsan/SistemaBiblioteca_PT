@@ -19,7 +19,8 @@ public class Ventana_FormularioNuevoLibro extends JFrame{
 
     private DisplayText displayStrings  = new DisplayText();
     private ResourceBundle rb = displayStrings.getRb();
-	private String[] labels = {"Titulo", "Autor", "Año","ISBN","Sinopsis","Editorial","Edicion"};
+	private String[] labels = {rb.getString("title"),rb.getString("autor"), rb.getString("year"),
+    rb.getString("isbn"),rb.getString("sinopsis"),rb.getString("editorial"),rb.getString("edition")};
     private JTextField campos[] = new JTextField[labels.length];
 	private JButton botonRegistrar;
     private JButton botonLimpiar;
@@ -52,7 +53,7 @@ public class Ventana_FormularioNuevoLibro extends JFrame{
 
         botonRegistrar = new JButton(rb.getString("newBookRegisterButton"));
         botonLimpiar = new JButton(rb.getString("newBookCleanDataButton"));
-        botonPortada = new JButton(rb.getString("newBookAddCover"));
+        botonPortada = new JButton(rb.getString("newBookAddCoverButton"));
 
         panelBotones.add(botonRegistrar);
         panelBotones.add(botonLimpiar);

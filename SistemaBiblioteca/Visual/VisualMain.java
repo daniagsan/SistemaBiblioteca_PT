@@ -8,7 +8,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -50,16 +50,10 @@ public class VisualMain extends JPanel{
 
     public JPanel panelBotones(){
 
-        JPanel areaBotones = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        areaBotones.setBackground(Color.black);
-        
+        JPanel areaBotones = new JPanel(new GridLayout(0,3,5,0));
 
-        nuevoLibro.setFont(new Font("Calibri",Font.PLAIN,18));
         nuevoLibro.setHorizontalAlignment(JButton.CENTER);
-        buscar.setFont(new Font("Calibri",Font.PLAIN,18));
         buscar.setHorizontalAlignment(JButton.CENTER);
-        busqueda.setFont(new Font("Calibri",Font.PLAIN,18));
-
 
         areaBotones.add(nuevoLibro);
         areaBotones.add(buscar);
@@ -103,7 +97,12 @@ public class VisualMain extends JPanel{
  
         //Carga los botones de manera asincrona
         try {
-                Image originalImage = ImageIO.read(new File(imageDir));
+            File imageFile = new File(imageDir);
+
+            if (!imageFile.exists()) {
+                throw new IOException("Image file not found: " + imageDir);
+            }
+                Image originalImage = ImageIO.read(imageFile);
                 Image resizedImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_AREA_AVERAGING);
                 ImageIcon icon = new ImageIcon(resizedImage);
                 
@@ -123,7 +122,6 @@ public class VisualMain extends JPanel{
 
         
         bookButtons.add(libro);
-        updateBookPanel();
         return libro;
     }
 
