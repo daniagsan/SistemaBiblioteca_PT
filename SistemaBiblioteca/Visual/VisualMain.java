@@ -33,7 +33,7 @@ public class VisualMain extends JPanel{
     ArrayList<JButton> bookButtons = new ArrayList<>();
     JPanel areaLibros = new JPanel(new FlowLayout(FlowLayout.LEFT));
     JScrollPane scrollPane = new JScrollPane(areaLibros);
-    JTextField busqueda  = new JTextField();
+    JTextField barraBusqueda  = new JTextField();
 
 
     public VisualMain(){
@@ -57,10 +57,34 @@ public class VisualMain extends JPanel{
 
         areaBotones.add(nuevoLibro);
         areaBotones.add(buscar);
-        areaBotones.add(busqueda);
+        areaBotones.add(barraBusqueda);
         
 
         return areaBotones;
+    }
+
+    public void updateBookPanel(String libro){
+        int ctrl = 0;
+        for(JButton b: bookButtons){
+            if(libro.equals(b.getText())){
+                switch(ctrl){
+                    case 0:
+                    areaLibros.removeAll();
+                    ctrl++;
+                    break;
+
+                    default:
+                    areaLibros.add(b);
+                    break;
+                }
+            }
+        }
+        areaLibros.revalidate();
+        areaLibros.repaint();
+    }
+
+    public String getBarraBusqueda() {
+        return barraBusqueda.getText();
     }
 
     public void updateBookPanel() {
@@ -71,8 +95,6 @@ public class VisualMain extends JPanel{
         
         areaLibros.revalidate();
         areaLibros.repaint();
-
-        
     }
 
     public void addListener(ActionListener listener) {
@@ -84,6 +106,8 @@ public class VisualMain extends JPanel{
         nuevoLibro.addActionListener(listener);
         buscar.addActionListener(listener);
     }
+
+
 
 
     public JButton creadorLibro(String titulo, String imageDir){
@@ -124,6 +148,4 @@ public class VisualMain extends JPanel{
         bookButtons.add(libro);
         return libro;
     }
-
-
 }

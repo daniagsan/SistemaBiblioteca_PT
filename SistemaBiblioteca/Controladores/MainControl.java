@@ -23,6 +23,11 @@ public class MainControl implements ActionListener{
     public JFileChooser imageDir;
     public File archivoImagen = new File("");
     public ArrayList<LibroData> librosUsuario = new ArrayList<>();
+    public String buttonAcess[] = {rb.getString("newBookButton"), 
+                                    rb.getString("searchButton"),
+                                    rb.getString("newBookRegisterButton"), 
+                                    rb.getString("newBookCleanDataButton"),
+                                    rb.getString("newBookAddCoverButton")};
 
     public MainControl(VisualMain visualMain){
         this.visualMain = visualMain;
@@ -34,8 +39,6 @@ public class MainControl implements ActionListener{
         //panelLibrosListeners();
         //nuevoLibro();
         botonesLibros();
-        
-        
     }
 
     @Override
@@ -43,10 +46,27 @@ public class MainControl implements ActionListener{
         //en este apartado, donde iran los listeners, el proceso
         //por default que sea darle click a los libros
         System.out.println(e.getActionCommand());
+
+        if(e.getActionCommand().equals(buttonAcess[0])){
+            ventanaNuevoLibro();
+        }else if(e.getActionCommand().equals(buttonAcess[1])){
+                
+        }else if(e.getActionCommand().equals(buttonAcess[2])){
+            registrarLibro();
+        }else if(e.getActionCommand().equals(buttonAcess[3])){
+                formulario.limpiarCampos();
+        }else if(e.getActionCommand().equals(buttonAcess[4])){
+                asignarPortada();
+        }
+        /* 
         switch(e.getActionCommand()){
 
             case "+ Nuevo libro":
                 ventanaNuevoLibro();
+            break;
+            
+            case "Buscar":
+
             break;
 
             case "Registar libro":
@@ -63,7 +83,7 @@ public class MainControl implements ActionListener{
             break;
             
         }
-        
+        */
     }
 
     public void ventanaNuevoLibro(){
