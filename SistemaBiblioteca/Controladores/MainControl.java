@@ -22,6 +22,7 @@ public class MainControl implements ActionListener{
     public LibroData libro = new LibroData();
     public JFileChooser imageDir;
     public File archivoImagen = new File("");
+    public String dirimage = "";
     public ArrayList<LibroData> librosUsuario = new ArrayList<>();
     public String buttonAcess[] = {rb.getString("newBookButton"), 
                                     rb.getString("searchButton"),
@@ -106,18 +107,19 @@ public class MainControl implements ActionListener{
             JOptionPane.showMessageDialog(formulario, rb.getString("emptyFieldsMessage"), rb.getString("emptyFieldsWinName"), 0);
         
         }else{
+            libro = new LibroData();
             libro.setTitulo(formulario.getTitulo().getText());
             libro.setAutor(formulario.getAutor().getText());
             libro.setYear(formulario.getYear().getText());
             libro.setSinopsis(formulario.getSinopsis().getText());
             libro.setEditorial(formulario.getEditorial().getText());
             libro.setEdicion(formulario.getEdicion().getText());
+            libro.setBotonLibro(visualMain.creadorLibro(formulario.getTitulo().getText(), dirimage));
+            libro.getBotonLibro().addActionListener(this);
             librosUsuario.add(libro); 
             visualMain.updateBookPanel();
-            libro = new LibroData();
             formulario.dispose();
         }
-        
         
 
     }
@@ -129,8 +131,7 @@ public class MainControl implements ActionListener{
         if (respuesta == JFileChooser.APPROVE_OPTION) {
 
             archivoImagen = imageDir.getSelectedFile();
-            String dirimage = archivoImagen.getAbsolutePath();
-            libro.setBotonLibro(visualMain.creadorLibro(formulario.getTitulo().getText(), dirimage));
+            dirimage = archivoImagen.getAbsolutePath();
 
         }
     }

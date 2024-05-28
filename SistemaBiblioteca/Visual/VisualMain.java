@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 public class VisualMain extends JPanel{
@@ -32,7 +31,6 @@ public class VisualMain extends JPanel{
     
     ArrayList<JButton> bookButtons = new ArrayList<>();
     JPanel areaLibros = new JPanel(new FlowLayout(FlowLayout.LEFT));
-    JScrollPane scrollPane = new JScrollPane(areaLibros);
     JTextField barraBusqueda  = new JTextField();
 
 
