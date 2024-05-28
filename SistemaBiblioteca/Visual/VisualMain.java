@@ -61,20 +61,15 @@ public class VisualMain extends JPanel{
         return areaBotones;
     }
 
-    public void updateBookPanel(String libro){
-        int ctrl = 0;
+    public void busquedaLibro(String libro){
+        System.out.println("entra");
+        
         for(JButton b: bookButtons){
-            if(libro.equals(b.getText())){
-                switch(ctrl){
-                    case 0:
-                    areaLibros.removeAll();
-                    ctrl++;
-                    break;
-
-                    default:
-                    areaLibros.add(b);
-                    break;
-                }
+            if(b.getText().equals(libro)){
+                areaLibros.removeAll();
+                areaLibros.add(b);
+            }else{
+                //aviso de que no se encontro con joptionpane
             }
         }
         areaLibros.revalidate();

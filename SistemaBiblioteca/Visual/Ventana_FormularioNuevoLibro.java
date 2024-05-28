@@ -1,6 +1,7 @@
 package SistemaBiblioteca.Visual;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
@@ -69,6 +70,10 @@ public class Ventana_FormularioNuevoLibro extends JFrame{
     	botonRegistrar.addActionListener(listener);
     	botonLimpiar.addActionListener(listener);
 		botonPortada.addActionListener(listener);
+    }
+
+    public void portadaAsignada(){
+        botonPortada.setBackground(Color.green);
     }
     
     public void limpiarCampos() {
