@@ -2,13 +2,15 @@ package SistemaBiblioteca.Visual;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -18,6 +20,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SpringLayout;
 
 public class VisualMain extends JPanel{
 
@@ -40,25 +43,32 @@ public class VisualMain extends JPanel{
 		setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         
 
-        add(panelBotones(), BorderLayout.NORTH);
+        add(panelBotones(), BorderLayout.WEST);
         add(areaLibros, BorderLayout.CENTER);
         
     }
 
 
-    public JPanel panelBotones(){
-
-        JPanel areaBotones = new JPanel(new GridLayout(0,3,5,0));
-
+    public JPanel panelBotones() {
+        JPanel inputArea = new JPanel();
+        inputArea.setLayout(new BoxLayout(inputArea, BoxLayout.Y_AXIS));
+        
+        JPanel areaBotones = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel searchArea = new JPanel(new SpringLayout());
+    
         nuevoLibro.setHorizontalAlignment(JButton.CENTER);
         buscar.setHorizontalAlignment(JButton.CENTER);
-
+    
         areaBotones.add(nuevoLibro);
         areaBotones.add(buscar);
-        areaBotones.add(barraBusqueda);
-        
-
-        return areaBotones;
+    
+        barraBusqueda.setPreferredSize(areaBotones.getPreferredSize());
+        searchArea.add(barraBusqueda);
+    
+        inputArea.add(areaBotones);
+        inputArea.add(searchArea);
+    
+        return inputArea;
     }
 
     public void busquedaLibro(String libro){
@@ -68,8 +78,13 @@ public class VisualMain extends JPanel{
             if(b.getText().equals(libro)){
                 areaLibros.removeAll();
                 areaLibros.add(b);
+                break;
             }else{
-                //aviso de que no se encontro con joptionpane
+                //va checando todos y en algun momento lo compara
+                JOptionPane.showMessageDialog(
+                this, rb.getString("missingBookMessage") + ": " + libro, 
+                rb.getString("winNameWarning"), JOptionPane.INFORMATION_MESSAGE);
+                break;
             }
         }
         areaLibros.revalidate();
@@ -133,8 +148,8 @@ public class VisualMain extends JPanel{
              //Aqui se actualizan los botones
         } catch (IOException ex) {
             //Apartado de aviso
-            //JOptionPane.showMessageDialog(this, ex, "Falla al cargar archivo de imagen", 0);
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, rb.getString("imageLoadFailedMessage"), rb.getString("winNameWarning"), 2);
+            //ex.printStackTrace();
         }
 
         

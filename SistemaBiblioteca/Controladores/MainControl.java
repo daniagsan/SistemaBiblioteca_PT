@@ -37,8 +37,6 @@ public class MainControl implements ActionListener{
         imageDir = new JFileChooser();
 		imageDir.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 		imageDir.addChoosableFileFilter(new FileNameExtensionFilter(rb.getString("fileType"), "jpg", "jpeg", "png"));
-        //panelLibrosListeners();
-        //nuevoLibro();
         botonesLibros();
     }
 
@@ -65,9 +63,6 @@ public class MainControl implements ActionListener{
     }
 
     public void ventanaNuevoLibro(){
-
-        //le mandamos el visual main para colocarlo en el setRelativeTo
-        //VentanaFormularioNuevoLibro formulario = new VentanaFormularioNuevoLibro(visualMain);
         
         formulario = new Ventana_FormularioNuevoLibro();
         formulario.asignarListeners(this);
@@ -81,7 +76,9 @@ public class MainControl implements ActionListener{
         
         if(!validarCampos()){
 
-            JOptionPane.showMessageDialog(formulario, rb.getString("emptyFieldsMessage"), rb.getString("emptyFieldsWinName"), 0);
+            JOptionPane.showMessageDialog(
+                formulario, rb.getString("emptyFieldsMessage"), 
+                rb.getString("winNameWarning"), 0);
         
         }else{
             libro = new LibroData();
