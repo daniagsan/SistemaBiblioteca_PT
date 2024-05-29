@@ -31,6 +31,7 @@ public class VisualMain extends JPanel{
 
     JButton nuevoLibro = new JButton(rb.getString("newBookButton"));
     JButton buscar = new JButton(rb.getString("searchButton"));
+    JButton cambiarVista = new JButton(rb.getString("updatePanelButton"));
     
     ArrayList<JButton> bookButtons = new ArrayList<>();
     JPanel areaLibros = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -43,13 +44,23 @@ public class VisualMain extends JPanel{
 		setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         
 
-        add(panelBotones(), BorderLayout.WEST);
+        add(panelBotonesWest(), BorderLayout.WEST);
         add(areaLibros, BorderLayout.CENTER);
+        add(panelBotonesSouth(), BorderLayout.SOUTH);
         
     }
 
+    public JPanel panelBotonesSouth() {
+        JPanel inputSouthArea = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-    public JPanel panelBotones() {
+        cambiarVista.setHorizontalAlignment(JButton.CENTER);
+
+        inputSouthArea.add(cambiarVista);
+    
+        return inputSouthArea;
+    }
+
+    public JPanel panelBotonesWest() {
         JPanel inputArea = new JPanel();
         inputArea.setLayout(new BoxLayout(inputArea, BoxLayout.Y_AXIS));
         
@@ -58,7 +69,8 @@ public class VisualMain extends JPanel{
     
         nuevoLibro.setHorizontalAlignment(JButton.CENTER);
         buscar.setHorizontalAlignment(JButton.CENTER);
-    
+        cambiarVista.setHorizontalAlignment(JButton.CENTER);
+
         areaBotones.add(nuevoLibro);
         areaBotones.add(buscar);
     
@@ -73,22 +85,24 @@ public class VisualMain extends JPanel{
 
     public void busquedaLibro(String libro){
         System.out.println("entra");
+        int ctrl = 0;
         
         for(JButton b: bookButtons){
             if(b.getText().equals(libro)){
                 areaLibros.removeAll();
                 areaLibros.add(b);
+                areaLibros.revalidate();
+                areaLibros.repaint();
                 break;
-            }else{
+            }else if(ctrl == bookButtons.size()){
                 //va checando todos y en algun momento lo compara
                 JOptionPane.showMessageDialog(
                 this, rb.getString("missingBookMessage") + ": " + libro, 
                 rb.getString("winNameWarning"), JOptionPane.INFORMATION_MESSAGE);
                 break;
             }
+            ctrl++;
         }
-        areaLibros.revalidate();
-        areaLibros.repaint();
     }
 
     public String getBarraBusqueda() {
@@ -113,6 +127,7 @@ public class VisualMain extends JPanel{
 
         nuevoLibro.addActionListener(listener);
         buscar.addActionListener(listener);
+        cambiarVista.addActionListener(listener);
     }
 
 

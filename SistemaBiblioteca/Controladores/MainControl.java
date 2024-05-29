@@ -28,7 +28,8 @@ public class MainControl implements ActionListener{
                                     rb.getString("searchButton"),
                                     rb.getString("newBookRegisterButton"), 
                                     rb.getString("newBookCleanDataButton"),
-                                    rb.getString("newBookAddCoverButton")};
+                                    rb.getString("newBookAddCoverButton"),
+                                    rb.getString("updatePanelButton")};
 
     public MainControl(VisualMain visualMain){
         this.visualMain = visualMain;
@@ -58,7 +59,10 @@ public class MainControl implements ActionListener{
             formulario.limpiarCampos();
         }else if(e.getActionCommand().equals(buttonAcess[4])){
             asignarPortada();
+        }else if(e.getActionCommand().equals(buttonAcess[5])){
+            visualMain.updateBookPanel();
         }
+        
 
     }
 
