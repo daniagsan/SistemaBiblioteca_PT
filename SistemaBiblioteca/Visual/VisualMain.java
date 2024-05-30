@@ -5,6 +5,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.BorderLayout;
@@ -22,6 +23,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
+import SistemaBiblioteca.modelos.LibroData;
+
 public class VisualMain extends JPanel{
 
     //Ventana ventana = new Ventana();
@@ -32,6 +35,7 @@ public class VisualMain extends JPanel{
     JButton nuevoLibro = new JButton(rb.getString("newBookButton"));
     JButton buscar = new JButton(rb.getString("searchButton"));
     JButton cambiarVista = new JButton(rb.getString("updatePanelButton"));
+    JButton librosPrueba = new JButton("Generar libros");
     
     ArrayList<JButton> bookButtons = new ArrayList<>();
     JPanel areaLibros = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -56,6 +60,7 @@ public class VisualMain extends JPanel{
         cambiarVista.setHorizontalAlignment(JButton.CENTER);
 
         inputSouthArea.add(cambiarVista);
+        inputSouthArea.add(librosPrueba);
     
         return inputSouthArea;
     }
@@ -81,6 +86,27 @@ public class VisualMain extends JPanel{
         inputArea.add(searchArea);
     
         return inputArea;
+    }
+
+    public JPanel informacionLibro(LibroData libro){
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+
+        JLabel datos[] = {new JLabel(libro.getTitulo()),
+                          new JLabel(libro.getAutor()),
+                          new JLabel(libro.getYear()),
+                          new JLabel(libro.getSinopsis()),
+                          new JLabel(libro.getIsbn()),
+                          new JLabel(libro.getEditorial()),
+                          new JLabel(libro.getEdicion())};
+
+        infoPanel.add(datos[0]);
+        /*
+         * Toda la informacion del libro,  comenzando por el titulo, despues por la portada
+         */
+
+
+        return  infoPanel;
     }
 
     public void busquedaLibro(String libro){
@@ -128,6 +154,7 @@ public class VisualMain extends JPanel{
         nuevoLibro.addActionListener(listener);
         buscar.addActionListener(listener);
         cambiarVista.addActionListener(listener);
+        librosPrueba.addActionListener(listener);
     }
 
 

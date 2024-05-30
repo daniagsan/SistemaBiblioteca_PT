@@ -63,9 +63,51 @@ public class MainControl implements ActionListener{
             asignarPortada();
         }else if(e.getActionCommand().equals(buttonAcess[5])){
             visualMain.updateBookPanel();
+        }else if(e.getActionCommand().equals("Generar libros")){
+            librosPrueba();
+        }else{
+            //aqui es si presionamos el boton de un libro
+            //buscar el nombre  del libro a  traves del  action command mandanndo el
+            //dato a una funcion
+            infoLibro(e.getActionCommand());
         }
         
 
+    }
+    
+    public void infoLibro(String titulo){
+        
+
+    }
+
+    public void librosPrueba() {
+        String[] titulos = {"El Gran Gatsby", "Cien Años de Soledad", "Don Quijote", "Matar a un Ruiseñor", "1984"};
+        String[] autores = {"F. Scott Fitzgerald", "Gabriel García Márquez", "Miguel de Cervantes", "Harper Lee", "George Orwell"};
+        String[] years = {"1925", "1967", "1605", "1960", "1949"};
+        String[] sinopsis = {
+            "Una novela sobre la esperanza y la desilusión.",
+            "Una saga épica de la familia Buendía.",
+            "Las aventuras del ingenioso hidalgo Don Quijote de la Mancha.",
+            "Un drama sobre la justicia y el racismo en el sur de los Estados Unidos.",
+            "Una visión distópica del futuro."
+        };
+        String[] editoriales = {"Scribner", "Editorial Sudamericana", "Francisco de Robles", "J.B. Lippincott & Co.", "Secker & Warburg"};
+        String[] ediciones = {"1ª", "1ª", "1ª", "1ª", "1ª"};
+
+        for (int i = 0; i < 5; i++) {
+            LibroData libro = new LibroData();
+            libro.setTitulo(titulos[i]);
+            libro.setAutor(autores[i]);
+            libro.setYear(years[i]);
+            libro.setSinopsis(sinopsis[i]);
+            libro.setEditorial(editoriales[i]);
+            libro.setEdicion(ediciones[i]);
+            libro.setBotonLibro(visualMain.creadorLibro(titulos[i], "")); // No image path provided
+            libro.getBotonLibro().addActionListener(this);
+            librosUsuario.add(libro);
+        }
+
+        visualMain.updateBookPanel();
     }
 
     public void ventanaNuevoLibro(){
