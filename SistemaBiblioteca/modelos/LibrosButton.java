@@ -1,6 +1,5 @@
 package SistemaBiblioteca.modelos;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 /*
@@ -11,7 +10,6 @@ el tamaño de los mismos mientras la imagen se adapta
 
 public class LibrosButton{
 
-    private ImageIcon portada;
     private JButton botonLibro = new JButton();
 
     public LibrosButton(){

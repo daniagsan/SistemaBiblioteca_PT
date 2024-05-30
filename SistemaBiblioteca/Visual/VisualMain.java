@@ -12,6 +12,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -21,6 +22,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.Spring;
 import javax.swing.SpringLayout;
 
 import SistemaBiblioteca.modelos.LibroData;
@@ -52,49 +54,42 @@ public class VisualMain extends JPanel{
 
         add(panelBotonesWest(), BorderLayout.WEST);
         add(areaLibros, BorderLayout.CENTER);
-        add(panelBotonesSouth(), BorderLayout.SOUTH);
         
-    }
-
-    public JPanel panelBotonesSouth() {
-        JPanel inputSouthArea = new JPanel(new FlowLayout(FlowLayout.LEFT));
-
-        cambiarVista.setHorizontalAlignment(JButton.CENTER);
-
-        inputSouthArea.add(cambiarVista);
-        inputSouthArea.add(librosPrueba);
-    
-        return inputSouthArea;
     }
 
     public JPanel panelBotonesWest() {
         JPanel inputArea = new JPanel();
         inputArea.setLayout(new BoxLayout(inputArea, BoxLayout.Y_AXIS));
         
-        JPanel areaBotones = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel areaBotones = new JPanel(new GridLayout(2,1,2,2));
         JPanel searchArea = new JPanel(new SpringLayout());
+        
     
+        cambiarVista.setHorizontalAlignment(JButton.CENTER);
         nuevoLibro.setHorizontalAlignment(JButton.CENTER);
         buscar.setHorizontalAlignment(JButton.CENTER);
-        cambiarVista.setHorizontalAlignment(JButton.CENTER);
 
+        
         areaBotones.add(nuevoLibro);
         areaBotones.add(buscar);
-    
-        barraBusqueda.setPreferredSize(areaBotones.getPreferredSize());
+        //barraBusqueda.setPreferredSize(areaBotones.getPreferredSize());
         searchArea.add(barraBusqueda);
+        areaBotones.add(cambiarVista);
+        areaBotones.add(librosPrueba);
+
+        
     
         inputArea.add(areaBotones);
         inputArea.add(searchArea);
-        inputArea.add(infoBookPanel);
+        
     
         return inputArea;
     }
 
     public void updateBookIinfoPanel(LibroData libro){
-        
-        infoBookPanel.setLayout(new BoxLayout(infoBookPanel, BoxLayout.Y_AXIS));
+
         infoBookPanel.removeAll();
+        infoBookPanel.setLayout(new BoxLayout(infoBookPanel, BoxLayout.Y_AXIS));
         JLabel datos[] = {new JLabel(libro.getTitulo()),
                           new JLabel(libro.getAutor()),
                           new JLabel(libro.getYear()),
@@ -104,6 +99,7 @@ public class VisualMain extends JPanel{
                           new JLabel(libro.getEdicion())};
 
         infoBookPanel.add(datos[0]);
+        infoBookPanel.add(libro.getBotonLibro());
         /*
          * Toda la informacion del libro,  comenzando por el titulo, despues por la portada
          */

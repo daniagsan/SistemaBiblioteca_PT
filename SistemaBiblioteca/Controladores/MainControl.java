@@ -77,6 +77,11 @@ public class MainControl implements ActionListener{
     
     public void infoLibro(String titulo){
         
+        for (LibroData l: librosUsuario){
+            if(l.getTitulo().equals(titulo)){
+                visualMain.updateBookIinfoPanel(l);
+            }
+        }
 
     }
 
@@ -143,10 +148,6 @@ public class MainControl implements ActionListener{
             visualMain.updateBookPanel();
             
         }
-    }
-
-    public void registrosPrueba(){
-        
     }
 
     public void asignarPortada() {
