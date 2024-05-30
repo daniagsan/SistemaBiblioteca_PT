@@ -45,6 +45,8 @@ public class MainControl implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         //en este apartado, donde iran los listeners, el proceso
         //por default que sea darle click a los libros
+        //commitest
+        
         System.out.println(e.getActionCommand());
         /*Colocamos esto para que el nombre de los botones
         se  tome  del archivo properties
