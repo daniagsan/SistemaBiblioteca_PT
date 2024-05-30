@@ -41,6 +41,8 @@ public class VisualMain extends JPanel{
     JPanel areaLibros = new JPanel(new FlowLayout(FlowLayout.LEFT));
     JTextField barraBusqueda  = new JTextField();
 
+    JPanel infoBookPanel = new JPanel();
+
 
     public VisualMain(){
 
@@ -84,14 +86,15 @@ public class VisualMain extends JPanel{
     
         inputArea.add(areaBotones);
         inputArea.add(searchArea);
+        inputArea.add(infoBookPanel);
     
         return inputArea;
     }
 
-    public JPanel informacionLibro(LibroData libro){
-        JPanel infoPanel = new JPanel();
-        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
-
+    public void updateBookIinfoPanel(LibroData libro){
+        
+        infoBookPanel.setLayout(new BoxLayout(infoBookPanel, BoxLayout.Y_AXIS));
+        infoBookPanel.removeAll();
         JLabel datos[] = {new JLabel(libro.getTitulo()),
                           new JLabel(libro.getAutor()),
                           new JLabel(libro.getYear()),
@@ -100,13 +103,12 @@ public class VisualMain extends JPanel{
                           new JLabel(libro.getEditorial()),
                           new JLabel(libro.getEdicion())};
 
-        infoPanel.add(datos[0]);
+        infoBookPanel.add(datos[0]);
         /*
          * Toda la informacion del libro,  comenzando por el titulo, despues por la portada
          */
-
-
-        return  infoPanel;
+        infoBookPanel.revalidate();
+        infoBookPanel.repaint();
     }
 
     public void busquedaLibro(String libro){
