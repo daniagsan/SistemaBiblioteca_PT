@@ -95,11 +95,14 @@ public class MainControl implements ActionListener{
             libro.setBotonLibro(visualMain.creadorLibro(formulario.getTitulo().getText(), dirimage));
             libro.getBotonLibro().addActionListener(this);
             librosUsuario.add(libro); 
-            visualMain.updateBookPanel();
             formulario.dispose();
+            visualMain.updateBookPanel();
+            
         }
-        
+    }
 
+    public void registrosPrueba(){
+        
     }
 
     public void asignarPortada() {
