@@ -19,6 +19,7 @@ public class MainControl implements ActionListener{
     public ResourceBundle rb = displayStrings.getRb();
     public VisualMain visualMain = new VisualMain();
     public Ventana_FormularioNuevoLibro formulario;
+    public Ventana_LibroDatos datosLibro;
     public LibroData libro = new LibroData();
     public JFileChooser imageDir;
     public File archivoImagen = new File("");
@@ -46,8 +47,6 @@ public class MainControl implements ActionListener{
         //en este apartado, donde iran los listeners, el proceso
         //por default que sea darle click a los libros
         //commitest
-        
-        System.out.println(e.getActionCommand());
         /*Colocamos esto para que el nombre de los botones
         se  tome  del archivo properties
         */
@@ -69,19 +68,10 @@ public class MainControl implements ActionListener{
             //aqui es si presionamos el boton de un libro
             //buscar el nombre  del libro a  traves del  action command mandanndo el
             //dato a una funcion
-            infoLibro(e.getActionCommand());
+            ventanaInfoLibro(e.getActionCommand());
+            System.out.println();
         }
         
-
-    }
-    
-    public void infoLibro(String titulo){
-        
-        for (LibroData l: librosUsuario){
-            if(l.getTitulo().equals(titulo)){
-                visualMain.updateBookIinfoPanel(l);
-            }
-        }
 
     }
 
@@ -121,6 +111,20 @@ public class MainControl implements ActionListener{
         formulario.asignarListeners(this);
         formulario.setLocationRelativeTo(visualMain);
         formulario.setVisible(true);
+        
+
+    }
+
+    public void ventanaInfoLibro(String titulo){
+
+        for(LibroData l: librosUsuario){
+            if(titulo.equals(l.getTitulo())){
+                formulario = new Ventana_FormularioNuevoLibro();
+                datosLibro = new Ventana_LibroDatos(l);
+                datosLibro.setLocationRelativeTo(visualMain);
+                datosLibro.setVisible(true);
+            }
+        }
         
 
     }

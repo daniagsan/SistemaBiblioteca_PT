@@ -12,6 +12,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
@@ -52,17 +53,20 @@ public class VisualMain extends JPanel{
 		setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         
 
-        add(panelBotonesWest(), BorderLayout.WEST);
+        //add(panelBotonesWest(), BorderLayout.WEST);
+        add(panelBotonesWest(), BorderLayout.NORTH);
         add(areaLibros, BorderLayout.CENTER);
         
     }
 
     public JPanel panelBotonesWest() {
-        JPanel inputArea = new JPanel();
+        JPanel inputArea = new JPanel(new GridLayout(1,1,0,5));
         inputArea.setLayout(new BoxLayout(inputArea, BoxLayout.Y_AXIS));
         
-        JPanel areaBotones = new JPanel(new GridLayout(2,1,2,2));
-        JPanel searchArea = new JPanel(new SpringLayout());
+        JPanel areaBotones = new JPanel(new FlowLayout());
+        JPanel searchArea = new JPanel();
+
+        //JPanel areaBotones2 = new JPanel(new GridLayout(1,2,3,0));
         
     
         cambiarVista.setHorizontalAlignment(JButton.CENTER);
@@ -72,16 +76,13 @@ public class VisualMain extends JPanel{
         
         areaBotones.add(nuevoLibro);
         areaBotones.add(buscar);
-        //barraBusqueda.setPreferredSize(areaBotones.getPreferredSize());
-        searchArea.add(barraBusqueda);
         areaBotones.add(cambiarVista);
         areaBotones.add(librosPrueba);
-
-        
+        barraBusqueda.setPreferredSize(areaBotones.getPreferredSize());
+        searchArea.add(barraBusqueda);
     
         inputArea.add(areaBotones);
         inputArea.add(searchArea);
-        
     
         return inputArea;
     }
