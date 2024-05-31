@@ -111,15 +111,13 @@ public class MainControl implements ActionListener{
         formulario.asignarListeners(this);
         formulario.setLocationRelativeTo(visualMain);
         formulario.setVisible(true);
-        
-
+    
     }
 
     public void ventanaInfoLibro(String titulo){
 
         for(LibroData l: librosUsuario){
             if(titulo.equals(l.getTitulo())){
-                formulario = new Ventana_FormularioNuevoLibro();
                 datosLibro = new Ventana_LibroDatos(l);
                 datosLibro.setLocationRelativeTo(visualMain);
                 datosLibro.setVisible(true);
