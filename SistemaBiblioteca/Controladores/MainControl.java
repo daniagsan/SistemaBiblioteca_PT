@@ -2,10 +2,13 @@ package SistemaBiblioteca.Controladores;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -13,7 +16,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import SistemaBiblioteca.Visual.*;
 import SistemaBiblioteca.modelos.*;
 
-public class MainControl implements ActionListener{
+public class MainControl implements ActionListener, WindowListener{
 
     public DisplayText displayStrings  = new DisplayText();
     public ResourceBundle rb = displayStrings.getRb();
@@ -31,6 +34,8 @@ public class MainControl implements ActionListener{
                                     rb.getString("newBookCleanDataButton"),
                                     rb.getString("newBookAddCoverButton"),
                                     rb.getString("updatePanelButton")};
+
+    JButton auxButton;
 
     public MainControl(VisualMain visualMain){
         this.visualMain = visualMain;
@@ -119,12 +124,12 @@ public class MainControl implements ActionListener{
         for(LibroData l: librosUsuario){
             if(titulo.equals(l.getTitulo())){
                 datosLibro = new Ventana_LibroDatos(l);
+                datosLibro.addWindowListener(this); 
                 datosLibro.setLocationRelativeTo(visualMain);
                 datosLibro.setVisible(true);
+                auxButton = l.getBotonLibro();
             }
         }
-        
-
     }
 
     public void registrarLibro(){
@@ -148,7 +153,6 @@ public class MainControl implements ActionListener{
             librosUsuario.add(libro); 
             formulario.dispose();
             visualMain.updateBookPanel();
-            
         }
     }
 
@@ -161,8 +165,6 @@ public class MainControl implements ActionListener{
             archivoImagen = imageDir.getSelectedFile();
             dirimage = archivoImagen.getAbsolutePath();
             formulario.portadaAsignada();
-
-
         }
     }
 
@@ -186,5 +188,53 @@ public class MainControl implements ActionListener{
 		
 		return true;
 	}
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+        // TODO Auto-generated method stub
+        //throw new UnsupportedOperationException("Unimplemented method 'windowOpened'");
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        // TODO Auto-generated method stub
+       // throw new UnsupportedOperationException("Unimplemented method 'windowClosing'");
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        if (e.getWindow() == datosLibro) {
+            for(LibroData l: librosUsuario){
+                if(l.getBotonLibro().equals(auxButton)){
+                    l.getBotonLibro().setEnabled(true);
+                }
+            }
+            visualMain.updateBookPanel();
+        }
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        // TODO Auto-generated method stub
+        //throw new UnsupportedOperationException("Unimplemented method 'windowIconified'");
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        // TODO Auto-generated method stub
+        //throw new UnsupportedOperationException("Unimplemented method 'windowDeiconified'");
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        // TODO Auto-generated method stub
+        //throw new UnsupportedOperationException("Unimplemented method 'windowActivated'");
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        // TODO Auto-generated method stub
+        //throw new UnsupportedOperationException("Unimplemented method 'windowDeactivated'");
+    }
 
 }

@@ -1,15 +1,15 @@
 package SistemaBiblioteca.Visual;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import com.itextpdf.layout.borders.Border;
+import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import SistemaBiblioteca.modelos.LibroData;
 
@@ -19,33 +19,55 @@ public class Ventana_LibroDatos extends JFrame{
     private ResourceBundle rb = displayStrings.getRb();
 
     public Ventana_LibroDatos(LibroData libro){
-        setVisible(true);
-		setTitle(rb.getString("dataBookWindowName"));
-		setLayout(new BorderLayout());
-        setPreferredSize(getPreferredSize());
 
-        JPanel infoPanel = new JPanel(new BorderLayout());
-        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+        // Add the button to the frame
+        JPanel panelLibroDatos = new JPanel();
+        panelLibroDatos.setLayout(new BoxLayout(panelLibroDatos, BoxLayout.Y_AXIS));
+        //en vez de que sea el boton, que sea la direccion de la imagen
 
-        JLabel datos[] = {new JLabel(libro.getTitulo()),
-                          new JLabel(libro.getAutor()),
-                          new JLabel(libro.getYear()),
-                          new JLabel(libro.getSinopsis()),
-                          new JLabel(libro.getIsbn()),
-                          new JLabel(libro.getEditorial()),
-                          new JLabel(libro.getEdicion())};
+        libro.getBotonLibro().setEnabled(false);
 
-        for(int x = 0; x < datos.length; x++){
-            datos[x].setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 15));
-            infoPanel.add(datos[x]);
+        JTextPane textInfo = new JTextPane();
+        textInfo.setContentType("text/plain");
+        textInfo.setEditable(false);
+
+        // StyledDocument to center text
+        StyledDocument doc = textInfo.getStyledDocument();
+
+        SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        StyleConstants.setFontFamily(center, "Arial");
+        StyleConstants.setFontSize(center, 16);
+        StyleConstants.setBold(center, true);
+
+        doc.setParagraphAttributes(0, doc.getLength(), center, false);
+
+        try {
+            doc.insertString(doc.getLength(), rb.getString("title") + ": " + libro.getTitulo() + "\n", center);
+            doc.insertString(doc.getLength(), rb.getString("autor") + ": " + libro.getAutor() + "\n", center);
+            doc.insertString(doc.getLength(), rb.getString("year") + ": " + libro.getYear() + "\n", center);
+            doc.insertString(doc.getLength(), rb.getString("sinopsis") + ": " + libro.getSinopsis() + "\n", center);
+            doc.insertString(doc.getLength(), rb.getString("isbn") + ": " + libro.getIsbn() + "\n", center);
+            doc.insertString(doc.getLength(), rb.getString("editorial") + ": " + libro.getEditorial() + "\n", center);
+            doc.insertString(doc.getLength(), rb.getString("edition") + ": " + libro.getEdicion() + "\n", center);
+        } catch (BadLocationException e) {
+            e.printStackTrace();
         }
 
-        
-        setPreferredSize(new Dimension(300, 500));
+        // Add the textInfo to the infoPanel
+        panelLibroDatos.add(textInfo);
+        panelLibroDatos.add(libro.getBotonLibro());
 
-        // Pack the frame to respect preferred sizes of its components
-        pack();
-        add(infoPanel, BorderLayout.CENTER);
+
+        add(panelLibroDatos);
+    
+
+        // Set frame properties
+        setSize(300, 500);
+        setLocationRelativeTo(null); // Center the frame on the screen
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setVisible(true);
+
     }
 
 }

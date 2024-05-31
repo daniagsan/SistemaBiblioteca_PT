@@ -12,7 +12,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
@@ -23,9 +22,6 @@ import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.Spring;
-import javax.swing.SpringLayout;
-
 import SistemaBiblioteca.modelos.LibroData;
 
 public class VisualMain extends JPanel{
@@ -101,9 +97,7 @@ public class VisualMain extends JPanel{
 
         infoBookPanel.add(datos[0]);
         infoBookPanel.add(libro.getBotonLibro());
-        /*
-         * Toda la informacion del libro,  comenzando por el titulo, despues por la portada
-         */
+        
         infoBookPanel.revalidate();
         infoBookPanel.repaint();
     }
