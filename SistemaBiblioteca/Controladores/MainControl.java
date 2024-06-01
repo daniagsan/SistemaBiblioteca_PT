@@ -93,7 +93,8 @@ public class MainControl implements ActionListener, WindowListener{
         };
         String[] editoriales = {"Scribner", "Editorial Sudamericana", "Francisco de Robles", "J.B. Lippincott & Co.", "Secker & Warburg"};
         String[] ediciones = {"1ª", "1ª", "1ª", "1ª", "1ª"};
-
+        String[] isbns = {"9780743273565", "9780307474728", "9788491050274", "9780061120084", "9780451524935"};
+    
         for (int i = 0; i < 5; i++) {
             LibroData libro = new LibroData();
             libro.setTitulo(titulos[i]);
@@ -102,13 +103,15 @@ public class MainControl implements ActionListener, WindowListener{
             libro.setSinopsis(sinopsis[i]);
             libro.setEditorial(editoriales[i]);
             libro.setEdicion(ediciones[i]);
+            libro.setIsbn(isbns[i]);
             libro.setBotonLibro(visualMain.creadorLibro(titulos[i], "")); // No image path provided
             libro.getBotonLibro().addActionListener(this);
             librosUsuario.add(libro);
         }
-
+    
         visualMain.updateBookPanel();
     }
+    
 
     public void ventanaNuevoLibro(){
         
@@ -145,6 +148,7 @@ public class MainControl implements ActionListener, WindowListener{
             libro.setTitulo(formulario.getTitulo().getText());
             libro.setAutor(formulario.getAutor().getText());
             libro.setYear(formulario.getYear().getText());
+            libro.setIsbn(formulario.getISBN().getText());
             libro.setSinopsis(formulario.getSinopsis().getText());
             libro.setEditorial(formulario.getEditorial().getText());
             libro.setEdicion(formulario.getEdicion().getText());

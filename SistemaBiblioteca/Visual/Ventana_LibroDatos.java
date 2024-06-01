@@ -2,10 +2,10 @@ package SistemaBiblioteca.Visual;
 
 import java.util.ResourceBundle;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
@@ -22,13 +22,22 @@ public class Ventana_LibroDatos extends JFrame{
     public Ventana_LibroDatos(LibroData libro){
 
         JPanel panelLibroDatos = new JPanel();
-        panelLibroDatos.setLayout(new BoxLayout(panelLibroDatos, BoxLayout.Y_AXIS));
         
         //en vez de que sea el boton, que sea la direccion de la imagen
         //que la informaciion aparezca pegada con el boton  o la imagen del boton
-        
         libro.getBotonLibro().setEnabled(false);
 
+        JTextArea textAreaInfo = new JTextArea();
+        textAreaInfo.setText(rb.getString("title") + ": " + libro.getTitulo() + "\n"  +
+                              rb.getString("autor") + ": " + libro.getAutor() + "\n" +
+                              rb.getString("year") + ": " + libro.getYear() + "\n"  +
+                              rb.getString("sinopsis") + ": " + libro.getSinopsis() + "\n"+ 
+                              rb.getString("isbn") + ": " + libro.getIsbn() + "\n" +
+                              rb.getString("editorial") + ": " + libro.getEditorial() + "\n" +
+                              rb.getString("edition") + ": " + libro.getEdicion());
+        textAreaInfo.setEditable(false);
+
+        /* 
         JTextPane textInfo = new JTextPane();
         textInfo.setContentType("text/plain");
         textInfo.setEditable(false);
@@ -54,18 +63,19 @@ public class Ventana_LibroDatos extends JFrame{
         } catch (BadLocationException e) {
             e.printStackTrace();
         }
-
-        panelLibroDatos.add(textInfo);
-        panelLibroDatos.add(Box.createVerticalGlue());
+        */
+        //panelLibroDatos.add(textInfo);
         panelLibroDatos.add(libro.getBotonLibro());
+        panelLibroDatos.add(textAreaInfo);
 
-
+        
         add(panelLibroDatos);
     
-        setSize(300, 500);
+        //setSize(300, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
+        pack();
 
     }
 
