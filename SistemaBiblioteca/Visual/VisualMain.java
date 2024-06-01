@@ -5,7 +5,6 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.BorderLayout;
@@ -22,7 +21,6 @@ import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import SistemaBiblioteca.modelos.LibroData;
 
 public class VisualMain extends JPanel{
 
@@ -40,30 +38,23 @@ public class VisualMain extends JPanel{
     JPanel areaLibros = new JPanel(new FlowLayout(FlowLayout.LEFT));
     JTextField barraBusqueda  = new JTextField();
 
-    JPanel infoBookPanel = new JPanel();
-
 
     public VisualMain(){
 
         setLayout(new BorderLayout(5,5));
 		setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        
-
-        //add(panelBotonesWest(), BorderLayout.WEST);
-        add(panelBotonesWest(), BorderLayout.NORTH);
+    
+        add(panelBotonesNorth(), BorderLayout.NORTH);
         add(areaLibros, BorderLayout.CENTER);
         
     }
 
-    public JPanel panelBotonesWest() {
+    public JPanel panelBotonesNorth() {
         JPanel inputArea = new JPanel(new GridLayout(1,1,0,5));
         inputArea.setLayout(new BoxLayout(inputArea, BoxLayout.Y_AXIS));
         
         JPanel areaBotones = new JPanel(new FlowLayout());
         JPanel searchArea = new JPanel();
-
-        //JPanel areaBotones2 = new JPanel(new GridLayout(1,2,3,0));
-        
     
         cambiarVista.setHorizontalAlignment(JButton.CENTER);
         nuevoLibro.setHorizontalAlignment(JButton.CENTER);
@@ -83,29 +74,8 @@ public class VisualMain extends JPanel{
         return inputArea;
     }
 
-    public void updateBookIinfoPanel(LibroData libro){
-
-        infoBookPanel.removeAll();
-        infoBookPanel.setLayout(new BoxLayout(infoBookPanel, BoxLayout.Y_AXIS));
-        JLabel datos[] = {new JLabel(libro.getTitulo()),
-                          new JLabel(libro.getAutor()),
-                          new JLabel(libro.getYear()),
-                          new JLabel(libro.getSinopsis()),
-                          new JLabel(libro.getIsbn()),
-                          new JLabel(libro.getEditorial()),
-                          new JLabel(libro.getEdicion())};
-
-        infoBookPanel.add(datos[0]);
-        infoBookPanel.add(libro.getBotonLibro());
-        
-        infoBookPanel.revalidate();
-        infoBookPanel.repaint();
-    }
-
     public void busquedaLibro(String libro){
-        System.out.println("entra");
         int ctrl = 0;
-        
         for(JButton b: bookButtons){
             if(b.getText().equals(libro)){
                 areaLibros.removeAll();
@@ -115,12 +85,14 @@ public class VisualMain extends JPanel{
                 break;
             }else if(ctrl == bookButtons.size()){
                 //va checando todos y en algun momento lo compara
+                //ver la  manera de que entre aqui
                 JOptionPane.showMessageDialog(
                 this, rb.getString("missingBookMessage") + ": " + libro, 
                 rb.getString("winNameWarning"), JOptionPane.INFORMATION_MESSAGE);
-                break;
+            }else{
+                ctrl++;
             }
-            ctrl++;
+            
         }
     }
 
@@ -131,6 +103,7 @@ public class VisualMain extends JPanel{
     public void updateBookPanel() {
         areaLibros.removeAll();
         for (JButton b : bookButtons) {
+            b.setEnabled(true);
             areaLibros.add(b);
         }
         
@@ -150,9 +123,6 @@ public class VisualMain extends JPanel{
         librosPrueba.addActionListener(listener);
     }
 
-
-
-
     public JButton creadorLibro(String titulo, String imageDir){
 
     JButton libro =  new JButton(titulo);
@@ -161,8 +131,7 @@ public class VisualMain extends JPanel{
     Dimension defaultButtonSize = new Dimension(newWidth, newHeight);
 
     libro.setPreferredSize(defaultButtonSize);
- 
-        //Carga los botones de manera asincrona
+    
         try {
             File imageFile = new File(imageDir);
 
@@ -180,11 +149,9 @@ public class VisualMain extends JPanel{
                 libro.setIcon(icon);
                 
 
-             //Aqui se actualizan los botones
         } catch (IOException ex) {
             //Apartado de aviso
             JOptionPane.showMessageDialog(this, rb.getString("imageLoadFailedMessage"), rb.getString("winNameWarning"), 2);
-            //ex.printStackTrace();
         }
 
         

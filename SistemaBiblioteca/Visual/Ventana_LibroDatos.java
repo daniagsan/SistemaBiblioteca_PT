@@ -20,18 +20,18 @@ public class Ventana_LibroDatos extends JFrame{
 
     public Ventana_LibroDatos(LibroData libro){
 
-        // Add the button to the frame
         JPanel panelLibroDatos = new JPanel();
         panelLibroDatos.setLayout(new BoxLayout(panelLibroDatos, BoxLayout.Y_AXIS));
+        
         //en vez de que sea el boton, que sea la direccion de la imagen
-
+        //que la informaciion aparezca pegada con el boton  o la imagen del boton
+        //de  preferencia la imagen
         libro.getBotonLibro().setEnabled(false);
 
         JTextPane textInfo = new JTextPane();
         textInfo.setContentType("text/plain");
         textInfo.setEditable(false);
 
-        // StyledDocument to center text
         StyledDocument doc = textInfo.getStyledDocument();
 
         SimpleAttributeSet center = new SimpleAttributeSet();
@@ -54,17 +54,14 @@ public class Ventana_LibroDatos extends JFrame{
             e.printStackTrace();
         }
 
-        // Add the textInfo to the infoPanel
         panelLibroDatos.add(textInfo);
         panelLibroDatos.add(libro.getBotonLibro());
 
 
         add(panelLibroDatos);
     
-
-        // Set frame properties
         setSize(300, 500);
-        setLocationRelativeTo(null); // Center the frame on the screen
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
 
