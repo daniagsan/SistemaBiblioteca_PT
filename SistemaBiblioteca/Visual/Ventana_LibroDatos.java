@@ -2,6 +2,7 @@ package SistemaBiblioteca.Visual;
 
 import java.util.ResourceBundle;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -25,7 +26,7 @@ public class Ventana_LibroDatos extends JFrame{
         
         //en vez de que sea el boton, que sea la direccion de la imagen
         //que la informaciion aparezca pegada con el boton  o la imagen del boton
-        //de  preferencia la imagen
+        
         libro.getBotonLibro().setEnabled(false);
 
         JTextPane textInfo = new JTextPane();
@@ -49,12 +50,13 @@ public class Ventana_LibroDatos extends JFrame{
             doc.insertString(doc.getLength(), rb.getString("sinopsis") + ": " + libro.getSinopsis() + "\n", center);
             doc.insertString(doc.getLength(), rb.getString("isbn") + ": " + libro.getIsbn() + "\n", center);
             doc.insertString(doc.getLength(), rb.getString("editorial") + ": " + libro.getEditorial() + "\n", center);
-            doc.insertString(doc.getLength(), rb.getString("edition") + ": " + libro.getEdicion() + "\n", center);
+            doc.insertString(doc.getLength(), rb.getString("edition") + ": " + libro.getEdicion(), center);
         } catch (BadLocationException e) {
             e.printStackTrace();
         }
 
         panelLibroDatos.add(textInfo);
+        panelLibroDatos.add(Box.createVerticalGlue());
         panelLibroDatos.add(libro.getBotonLibro());
 
 
