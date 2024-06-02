@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 public class VisualMain extends JPanel{
@@ -37,15 +38,22 @@ public class VisualMain extends JPanel{
     ArrayList<JButton> bookButtons = new ArrayList<>();
     JPanel areaLibros = new JPanel(new FlowLayout(FlowLayout.LEFT));
     JTextField barraBusqueda  = new JTextField();
+    JScrollPane scrollPane;
 
 
     public VisualMain(){
 
         setLayout(new BorderLayout(5,5));
 		setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-    
+        
+        areaLibros.setLayout(new GridLayout(0, 5, 10, 10));
+
+        scrollPane = new JScrollPane(areaLibros); 
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); 
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); 
+
         add(panelBotonesNorth(), BorderLayout.NORTH);
-        add(areaLibros, BorderLayout.CENTER);
+        add(scrollPane, BorderLayout.CENTER);
         
     }
 
