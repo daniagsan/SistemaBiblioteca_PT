@@ -83,8 +83,4 @@ public class LibroData extends LibrosButton{
     public void setEdicion(String edicion) {
         this.edicion = edicion;
     }
-
-    
-    
-
 }

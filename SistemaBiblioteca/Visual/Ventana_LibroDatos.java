@@ -1,17 +1,11 @@
 package SistemaBiblioteca.Visual;
 
+import java.awt.GridLayout;
 import java.util.ResourceBundle;
 
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
-
 import SistemaBiblioteca.modelos.LibroData;
 
 public class Ventana_LibroDatos extends JFrame{
@@ -21,28 +15,31 @@ public class Ventana_LibroDatos extends JFrame{
 
     public Ventana_LibroDatos(LibroData libro){
 
-        JPanel panelLibroDatos = new JPanel();
-        
+        // Add the button to the frame
+        JPanel panelLibroDatos = new JPanel(new GridLayout(2,0,0,5));
+        //panelLibroDatos.setLayout(new BoxLayout(panelLibroDatos, BoxLayout.Y_AXIS));
         //en vez de que sea el boton, que sea la direccion de la imagen
-        //que la informaciion aparezca pegada con el boton  o la imagen del boton
+
         libro.getBotonLibro().setEnabled(false);
+        JTextArea textInfo = new JTextArea();
 
-        JTextArea textAreaInfo = new JTextArea();
-        textAreaInfo.setText(rb.getString("title") + ": " + libro.getTitulo() + "\n"  +
-                              rb.getString("autor") + ": " + libro.getAutor() + "\n" +
-                              rb.getString("year") + ": " + libro.getYear() + "\n"  +
-                              rb.getString("sinopsis") + ": " + libro.getSinopsis() + "\n"+ 
-                              rb.getString("isbn") + ": " + libro.getIsbn() + "\n" +
-                              rb.getString("editorial") + ": " + libro.getEditorial() + "\n" +
-                              rb.getString("edition") + ": " + libro.getEdicion());
-        textAreaInfo.setEditable(false);
+        textInfo.setText(rb.getString("title") + ": " + libro.getTitulo() + "\n" +
+                          rb.getString("autor") + ": " + libro.getAutor() + "\n" +
+                          rb.getString("sinopsis") + ": " + libro.getSinopsis() + "\n" +
+                          rb.getString("isbn") + ": " + libro.getIsbn() + "\n" +
+                          rb.getString("editorial") + ": " + libro.getEditorial() + "\n" +
+                          rb.getString("edition") + ": " + libro.getEdicion());
 
-        /* 
-        JTextPane textInfo = new JTextPane();
-        textInfo.setContentType("text/plain");
+        textInfo.setLineWrap(true);
         textInfo.setEditable(false);
+        /* 
+        JTextPane sinopsisInfo = new JTextPane();
 
-        StyledDocument doc = textInfo.getStyledDocument();
+        sinopsisInfo.setContentType("text/plain");
+        sinopsisInfo.setEditable(false);
+
+        // StyledDocument to center text
+        StyledDocument doc = sinopsisInfo.getStyledDocument();
 
         SimpleAttributeSet center = new SimpleAttributeSet();
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
@@ -53,29 +50,21 @@ public class Ventana_LibroDatos extends JFrame{
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
 
         try {
-            doc.insertString(doc.getLength(), rb.getString("title") + ": " + libro.getTitulo() + "\n", center);
-            doc.insertString(doc.getLength(), rb.getString("autor") + ": " + libro.getAutor() + "\n", center);
-            doc.insertString(doc.getLength(), rb.getString("year") + ": " + libro.getYear() + "\n", center);
-            doc.insertString(doc.getLength(), rb.getString("sinopsis") + ": " + libro.getSinopsis() + "\n", center);
-            doc.insertString(doc.getLength(), rb.getString("isbn") + ": " + libro.getIsbn() + "\n", center);
-            doc.insertString(doc.getLength(), rb.getString("editorial") + ": " + libro.getEditorial() + "\n", center);
-            doc.insertString(doc.getLength(), rb.getString("edition") + ": " + libro.getEdicion(), center);
+            doc.insertString(0, rb.getString("sinopsis") + ": " + libro.getSinopsis(), null);
         } catch (BadLocationException e) {
             e.printStackTrace();
         }
         */
-        //panelLibroDatos.add(textInfo);
         panelLibroDatos.add(libro.getBotonLibro());
-        panelLibroDatos.add(textAreaInfo);
+        panelLibroDatos.add(textInfo);
 
-        
         add(panelLibroDatos);
     
-        //setSize(300, 500);
+        setSize(200, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
-        pack();
+        //pack();
 
     }
 
