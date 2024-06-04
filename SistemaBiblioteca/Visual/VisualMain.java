@@ -34,6 +34,7 @@ public class VisualMain extends JPanel{
     JButton buscar = new JButton(rb.getString("searchButton"));
     JButton cambiarVista = new JButton(rb.getString("updatePanelButton"));
     JButton librosPrueba = new JButton("Generar libros");
+    JButton pdf = new JButton("Generar Pdf");
     
     ArrayList<JButton> bookButtons = new ArrayList<>();
     JPanel areaLibros = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -73,6 +74,7 @@ public class VisualMain extends JPanel{
         areaBotones.add(buscar);
         areaBotones.add(cambiarVista);
         areaBotones.add(librosPrueba);
+        areaBotones.add(pdf);
         barraBusqueda.setPreferredSize(areaBotones.getPreferredSize());
         searchArea.add(barraBusqueda);
     
@@ -129,6 +131,7 @@ public class VisualMain extends JPanel{
         buscar.addActionListener(listener);
         cambiarVista.addActionListener(listener);
         librosPrueba.addActionListener(listener);
+        pdf.addActionListener(listener);
     }
 
     public JButton creadorLibro(String titulo, String imageDir){

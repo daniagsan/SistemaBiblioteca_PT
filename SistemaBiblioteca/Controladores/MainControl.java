@@ -1,17 +1,38 @@
 package SistemaBiblioteca.Controladores;
 
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.colors.DeviceGray;
+import com.itextpdf.kernel.colors.DeviceRgb;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.borders.Border;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 
 import SistemaBiblioteca.Visual.*;
 import SistemaBiblioteca.modelos.*;
@@ -69,6 +90,8 @@ public class MainControl implements ActionListener, WindowListener{
             visualMain.updateBookPanel();
         }else if(e.getActionCommand().equals("Generar libros")){
             librosPrueba();
+        }else if(e.getActionCommand().equals("Generar Pdf")){
+            generarPDF();    
         }else{
             //aqui es si presionamos el boton de un libro
             //buscar el nombre  del libro a  traves del  action command mandanndo el
@@ -192,6 +215,107 @@ public class MainControl implements ActionListener, WindowListener{
 		
 		return true;
 	}
+
+ private void generarPDF() {
+        UIManager.put("FileChooser.cancelButtonText", "Cancelar");
+        JFileChooser fileChooser = new JFileChooser("C:\\Users\\Gama\\Desktop");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        FileNameExtensionFilter pdfs = new FileNameExtensionFilter("Documentos PDF", "pdf");
+        fileChooser.addChoosableFileFilter(pdfs);
+        fileChooser.setFileFilter(pdfs);
+        
+        int respuesta = fileChooser.showDialog(visualMain, "Generar PDF");
+        
+        if (respuesta == JFileChooser.CANCEL_OPTION) {
+            JOptionPane.showMessageDialog(visualMain, "Se canceló la generación del PDF");
+            return;
+        }
+        
+        try (PdfDocument pdfDoc = new PdfDocument(new PdfWriter(fileChooser.getSelectedFile()));
+             Document doc = new Document(pdfDoc, PageSize.LETTER)) {
+            float[] anchoColumnas = {1, 2, 2, 2, 2, 2};
+            Table tabla = new Table(UnitValue.createPercentArray(anchoColumnas)).useAllAvailableWidth();
+            /* 
+            //Mis logitos
+            Image logo = new Image(ImageDataFactory.create("src/archivos/dasc.png"));
+            logo.setWidth(120); 
+            float x = 450; 
+            float y = 720; 
+            logo.setFixedPosition(x, y);
+            logo.setBorder(Border.NO_BORDER);
+            
+            doc.add(logo);
+            doc.add(new Paragraph("\n\n\n"));
+            
+            
+            Image logo2 = new Image(ImageDataFactory.create("src/archivos/logouabcs.png"));
+            logo2.setWidth(120); 
+            float x2 = 50; 
+            float y2 = 720; 
+            logo2.setFixedPosition(x2, y2);
+            logo2.setBorder(Border.NO_BORDER);
+            
+            doc.add(logo2);
+            
+            */
+            
+            
+            
+            
+            
+            
+            PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
+            Cell cell = new Cell(1, 6)
+                    .add(new Paragraph("Tabla de Libros"))
+                    .setFont(font)
+                    .setFontSize(18)
+                    .setFontColor(DeviceGray.WHITE)
+                    .setBackgroundColor(new DeviceRgb(79, 129, 189))
+                    .setTextAlignment(TextAlignment.CENTER);
+            
+            tabla.addHeaderCell(cell);
+            
+            // Agregar encabezados de tabla
+            String[] encabezados = {"ISBN", "Título", "Autor", "Año", "Editorial", "Edición"};
+            for (String encabezado : encabezados) {
+                Cell celdaEncabezado = new Cell()
+                        .setBackgroundColor(new DeviceRgb(216, 216, 216))
+                        .add(new Paragraph(encabezado))
+                        .setFont(font)
+                        .setFontSize(12)
+                        .setTextAlignment(TextAlignment.CENTER);
+                tabla.addHeaderCell(celdaEncabezado);
+            }
+            
+            // Agregar datos de usuarios a la tabla
+            for (int i = 0; i < librosUsuario.size(); i++) {
+                LibroData libro = librosUsuario.get(i);
+                //tabla.addCell(new Cell().setTextAlignment(TextAlignment.CENTER).add(new Paragraph(String.valueOf(i + 1))));
+                tabla.addCell(new Cell().setTextAlignment(TextAlignment.CENTER).add(new Paragraph(libro.getIsbn())));
+                tabla.addCell(new Cell().setTextAlignment(TextAlignment.CENTER).add(new Paragraph(libro.getTitulo())));
+                tabla.addCell(new Cell().setTextAlignment(TextAlignment.CENTER).add(new Paragraph(libro.getAutor())));
+                tabla.addCell(new Cell().setTextAlignment(TextAlignment.CENTER).add(new Paragraph(libro.getYear())));
+                tabla.addCell(new Cell().setTextAlignment(TextAlignment.CENTER).add(new Paragraph(libro.getEditorial())));
+                tabla.addCell(new Cell().setTextAlignment(TextAlignment.CENTER).add(new Paragraph(libro.getEdicion())));
+            }
+            
+            doc.add(tabla);
+            
+            if (Desktop.isDesktopSupported()) {
+                try {
+                    Desktop.getDesktop().open(fileChooser.getSelectedFile());
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(visualMain, "No se pudo abrir el archivo generado", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (java.io.IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(visualMain, "No se pudo exportar el PDF", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
 
     @Override
     public void windowOpened(WindowEvent e) {
