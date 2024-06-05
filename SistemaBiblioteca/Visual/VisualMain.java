@@ -23,6 +23,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import SistemaBiblioteca.modelos.LibroData;
+import SistemaBiblioteca.modelos.ModeloTablaLibros;
+
 public class VisualMain extends JPanel{
 
     //Ventana ventana = new Ventana();
@@ -35,7 +38,11 @@ public class VisualMain extends JPanel{
     JButton cambiarVista = new JButton(rb.getString("updatePanelButton"));
     JButton librosPrueba = new JButton("Generar libros");
     JButton pdf = new JButton("Generar Pdf");
-    
+    JButton GuardarSesion = new JButton("Guardar sesion");
+    JButton cambiarArchivo = new JButton("Cambiar archivo");
+    private ModeloTablaLibros modeloTablaLibros;
+
+
     ArrayList<JButton> bookButtons = new ArrayList<>();
     JPanel areaLibros = new JPanel(new FlowLayout(FlowLayout.LEFT));
     JTextField barraBusqueda  = new JTextField();
@@ -43,7 +50,7 @@ public class VisualMain extends JPanel{
 
 
     public VisualMain(){
-
+        modeloTablaLibros = new ModeloTablaLibros();
         setLayout(new BorderLayout(5,5));
 		setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         
@@ -55,6 +62,7 @@ public class VisualMain extends JPanel{
 
         add(panelBotonesNorth(), BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
+        
         
     }
 
@@ -75,6 +83,8 @@ public class VisualMain extends JPanel{
         areaBotones.add(cambiarVista);
         areaBotones.add(librosPrueba);
         areaBotones.add(pdf);
+        areaBotones.add(GuardarSesion);
+        areaBotones.add(cambiarArchivo);
         barraBusqueda.setPreferredSize(areaBotones.getPreferredSize());
         searchArea.add(barraBusqueda);
     
@@ -132,10 +142,12 @@ public class VisualMain extends JPanel{
         cambiarVista.addActionListener(listener);
         librosPrueba.addActionListener(listener);
         pdf.addActionListener(listener);
+        GuardarSesion.addActionListener(listener);
+        cambiarArchivo.addActionListener(listener);
     }
 
     public JButton creadorLibro(String titulo, String imageDir){
-
+    
     JButton libro =  new JButton(titulo);
     int newWidth = 100;
     int newHeight = 150;
@@ -169,4 +181,20 @@ public class VisualMain extends JPanel{
         bookButtons.add(libro);
         return libro;
     }
+
+    public ModeloTablaLibros getModeloTablaLibros() {
+        return modeloTablaLibros;
+    }
+
+    public void actualizarLibros(ArrayList<LibroData> libros) {
+    bookButtons.clear(); // Limpiar los botones de libros existentes
+    
+    for (LibroData libro : libros) {
+        JButton botonLibro = creadorLibro(libro.getTitulo(), libro.getAutor()); // Crea un nuevo botón para cada libro
+        bookButtons.add(botonLibro); // Agrega el botón a la lista de botones
+    }
+
+    updateBookPanel(); // Actualiza la interfaz de usuario para reflejar los cambios
+}
+
 }

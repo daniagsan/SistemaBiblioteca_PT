@@ -16,6 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.DeviceGray;
@@ -45,6 +47,10 @@ public class MainControl implements ActionListener, WindowListener{
     public Ventana_FormularioNuevoLibro formulario;
     public Ventana_LibroDatos datosLibro;
     public LibroData libro = new LibroData();
+    private File archivo; //xd
+    
+    private JFileChooser fileChooser = new JFileChooser();//xd
+    private ModeloTablaLibros modeloTablaLibros;
     public JFileChooser imageDir;
     public File archivoImagen = new File("");
     public String dirimage = "";
@@ -61,11 +67,17 @@ public class MainControl implements ActionListener, WindowListener{
     public MainControl(VisualMain visualMain){
         this.visualMain = visualMain;
         this.visualMain.addListener(this);
+        archivo = new File("SistemaBiblioteca//textJSON.json"); //xd
+        cargarLibros(); // xd
+        this.modeloTablaLibros = visualMain.getModeloTablaLibros();
+        mostrarLibros();
+        visualMain.updateBookPanel();
         librosUsuario = new ArrayList<LibroData>();
         imageDir = new JFileChooser();
 		imageDir.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 		imageDir.addChoosableFileFilter(new FileNameExtensionFilter(rb.getString("fileType"), "jpg", "jpeg", "png"));
         botonesLibros();
+        
     }
 
     @Override
@@ -91,7 +103,11 @@ public class MainControl implements ActionListener, WindowListener{
         }else if(e.getActionCommand().equals("Generar libros")){
             librosPrueba();
         }else if(e.getActionCommand().equals("Generar Pdf")){
-            generarPDF();    
+            generarPDF();
+        }else if(e.getActionCommand().equals("Guardar sesion")){
+            guardarLibros();
+        }else if(e.getActionCommand().equals("Cambiar archivo")){
+            cambiarArchivo();         
         }else{
             //aqui es si presionamos el boton de un libro
             //buscar el nombre  del libro a  traves del  action command mandanndo el
@@ -175,11 +191,14 @@ public class MainControl implements ActionListener, WindowListener{
             libro.setSinopsis(formulario.getSinopsis().getText());
             libro.setEditorial(formulario.getEditorial().getText());
             libro.setEdicion(formulario.getEdicion().getText());
+            
             libro.setBotonLibro(visualMain.creadorLibro(formulario.getTitulo().getText(), dirimage));
             libro.getBotonLibro().addActionListener(this);
             librosUsuario.add(libro); 
             formulario.dispose();
             visualMain.updateBookPanel();
+            
+            mostrarLibros();
         }
     }
 
@@ -315,6 +334,92 @@ public class MainControl implements ActionListener, WindowListener{
         }
     }
 
+    private void cargarLibros() {
+        try {
+            if (archivo != null && archivo.exists()) {
+                if (archivo.length() == 0) {
+                    librosUsuario = new ArrayList<>();
+                } else {
+                    ObjectMapper mapper = new ObjectMapper();
+                    librosUsuario = mapper.readValue(archivo, new TypeReference<ArrayList<LibroData>>() {});
+                    System.out.println("Libros cargados correctamente desde el archivo JSON.");
+                    
+                    // Impresión de libros cargados
+                    for (LibroData libro : librosUsuario) {
+                        System.out.println(libro.toString());
+                    }
+                }
+            } else {
+                librosUsuario = new ArrayList<>();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(visualMain, "Error al cargar libros desde el archivo JSON: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        mostrarLibros();
+        botonesLibros();
+        visualMain.actualizarLibros(librosUsuario);
+        visualMain.updateBookPanel();
+        
+    }
+    
+
+
+    private void guardarLibros() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            // Leer los libros existentes del archivo
+            ArrayList<LibroData> librosExistentes = new ArrayList<>();
+            if (archivo.exists() && archivo.length() != 0) {
+                librosExistentes = mapper.readValue(archivo, new TypeReference<ArrayList<LibroData>>() {});
+            }
+            
+            // Añadir los nuevos libros a la lista existente
+            librosExistentes.addAll(librosUsuario);
+            
+            // Guardar la lista combinada en el archivo JSON
+            mapper.writeValue(archivo, librosExistentes);
+            
+            // Limpiar la lista de nuevos libros después de guardarlos
+            librosUsuario.clear();
+        } catch (java.io.IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+    private void cambiarArchivo() {
+        fileChooser.setDialogTitle("Seleccionar archivo de guardado");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        
+        fileChooser.addChoosableFileFilter(
+        		new FileNameExtensionFilter("Archivos JSON", "json"));
+        
+        if (fileChooser.showOpenDialog(visualMain) == JFileChooser.APPROVE_OPTION) {
+            archivo = fileChooser.getSelectedFile();
+            System.out.println("Nuevo archivo seleccionado: " + archivo.getAbsolutePath());
+            cargarLibros();  
+            visualMain.actualizarLibros(librosUsuario);
+            botonesLibros();
+            visualMain.updateBookPanel();
+            
+        }
+    }
+
+    private void mostrarLibros() {
+
+        
+        ModeloTablaLibros modeloTablaLibros = visualMain.getModeloTablaLibros();
+        
+        
+        modeloTablaLibros.clearAllLibros();
+        
+        
+        for (LibroData libro : librosUsuario) {
+            modeloTablaLibros.addLibro(libro);
+        }
+        botonesLibros(); 
+    }
 
 
     @Override

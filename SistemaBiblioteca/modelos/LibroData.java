@@ -83,4 +83,17 @@ public class LibroData extends LibrosButton{
     public void setEdicion(String edicion) {
         this.edicion = edicion;
     }
+
+    @Override
+    public String toString() {
+        return "LibroData{" +
+                "titulo='" + titulo + '\'' +
+                ", autor='" + autor + '\'' +
+                ", year='" + year + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", sinopsis='" + sinopsis + '\'' +
+                ", editorial='" + editorial + '\'' +
+                ", edicion='" + edicion + '\'' +
+                '}';
+    }
 }
