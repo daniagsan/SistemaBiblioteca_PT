@@ -44,7 +44,7 @@ public class VisualMain extends JPanel{
 
 
     ArrayList<JButton> bookButtons = new ArrayList<>();
-    JPanel areaLibros = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    JPanel areaLibros = new JPanel();
     JTextField barraBusqueda  = new JTextField();
     JScrollPane scrollPane;
 
@@ -79,7 +79,7 @@ public class VisualMain extends JPanel{
 
         
         areaBotones.add(nuevoLibro);
-        areaBotones.add(buscar);
+        //areaBotones.add(buscar);
         areaBotones.add(cambiarVista);
         areaBotones.add(librosPrueba);
         areaBotones.add(pdf);
@@ -87,6 +87,7 @@ public class VisualMain extends JPanel{
         areaBotones.add(cambiarArchivo);
         barraBusqueda.setPreferredSize(areaBotones.getPreferredSize());
         searchArea.add(barraBusqueda);
+        searchArea.add(buscar);
     
         inputArea.add(areaBotones);
         inputArea.add(searchArea);
@@ -94,27 +95,26 @@ public class VisualMain extends JPanel{
         return inputArea;
     }
 
-    public void busquedaLibro(String libro){
-        int ctrl = 0;
-        for(JButton b: bookButtons){
-            if(b.getText().equals(libro)){
+    public void busquedaLibro(String libro) {
+        boolean libroEncontrado = false;
+        for (JButton b : bookButtons) {
+            if (b.getText().equalsIgnoreCase(libro)) {
                 areaLibros.removeAll();
                 areaLibros.add(b);
                 areaLibros.revalidate();
                 areaLibros.repaint();
+                libroEncontrado = true;
                 break;
-            }else if(ctrl == bookButtons.size()){
-                //va checando todos y en algun momento lo compara
-                //ver la  manera de que entre aqui
-                JOptionPane.showMessageDialog(
-                this, rb.getString("missingBookMessage") + ": " + libro, 
-                rb.getString("winNameWarning"), JOptionPane.INFORMATION_MESSAGE);
-            }else{
-                ctrl++;
             }
-            
+        }
+    
+        if (!libroEncontrado) {
+            JOptionPane.showMessageDialog(
+                this, rb.getString("missingBookMessage") + ": " + libro,
+                rb.getString("winNameWarning"), JOptionPane.INFORMATION_MESSAGE);
         }
     }
+    
 
     public String getBarraBusqueda() {
         return barraBusqueda.getText();
@@ -174,6 +174,7 @@ public class VisualMain extends JPanel{
 
         } catch (IOException ex) {
             //Apartado de aviso
+            
             JOptionPane.showMessageDialog(this, rb.getString("imageLoadFailedMessage"), rb.getString("winNameWarning"), 2);
         }
 

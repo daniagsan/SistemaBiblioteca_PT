@@ -24,6 +24,7 @@ public class Ventana_LibroDatos extends JFrame{
         JTextArea textInfo = new JTextArea();
 
         textInfo.setText(rb.getString("title") + ": " + libro.getTitulo() + "\n" +
+                        rb.getString("year") + ": " + libro.getYear() + "\n" +
                           rb.getString("autor") + ": " + libro.getAutor() + "\n" +
                           rb.getString("sinopsis") + ": " + libro.getSinopsis() + "\n" +
                           rb.getString("isbn") + ": " + libro.getIsbn() + "\n" +
